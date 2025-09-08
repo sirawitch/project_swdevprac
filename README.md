@@ -22,8 +22,8 @@ project-root/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/sirawitch/project_swdevprac
-cd project_swdevprac
+$ git clone https://github.com/sirawitch/project_swdevprac
+$ cd project_swdevprac
 ```
 
 ---
@@ -31,9 +31,9 @@ cd project_swdevprac
 ## 2. Frontend Setup
 
 ```bash
-cd frontend
-npm install
-npm run dev
+$ cd frontend
+$ npm install
+$ npm run dev
 ```
 
 This will install the necessary dependencies and start the frontend development server.  
@@ -44,9 +44,9 @@ The website is available at http://localhost:3000
 ## 3. Backend Setup
 
 ```bash
-cd backend
-npm install
-npm run dev
+$ cd backend
+$ npm install
+$ npm run dev
 ```
 
 This will install the backend dependencies and start the backend server in development mode.  
