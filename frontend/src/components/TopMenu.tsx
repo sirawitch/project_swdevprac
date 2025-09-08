@@ -1,0 +1,258 @@
+"use client";
+
+import React, { useState } from "react";
+import TopMenuItem from "./TopMenuItem";
+
+export default function TopMenu() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState("user");
+  const [modalMessage, setModalMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // สถานะสำหรับฟอร์ม Login และ Register
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [tel, setTel] = useState("");
+  const [role, setRole] = useState("member");
+
+  // สถานะเพื่อสลับระหว่างฟอร์ม Login และ Register
+  const [isRegisterMode, setIsRegisterMode] = useState(false);
+
+  // URL ของ Backend
+  const API_URL = "http://localhost:5001";
+
+  const handleLoginClick = () => {
+    setModalMessage("");
+    setIsModalOpen(true);
+  };
+
+  const handleLogoutClick = () => {
+    setIsLoggedIn(false);
+    setUserRole("user");
+    setIsModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEmail("");
+    setPassword("");
+    setName("");
+    setTel("");
+    setRole("member");
+    setIsRegisterMode(false);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      if (isRegisterMode) {
+        const response = await fetch(`${API_URL}/api/v1/auth/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, tel, role, password }),
+        });
+
+        if (response.ok) {
+          setModalMessage("สมัครสมาชิกสำเร็จแล้ว! กรุณาเข้าสู่ระบบ");
+          setIsRegisterMode(false);
+        } else {
+          const errorData = await response.json();
+          setModalMessage(errorData.message || "การลงทะเบียนล้มเหลว");
+        }
+      } else {
+        const response = await fetch(`${API_URL}/api/v1/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Response data from backend:", data);
+
+          let userRoleFromBackend = "member";
+          if (data && data.role) {
+            userRoleFromBackend = data.role;
+          } else if (data && data.user && data.user.role) {
+            userRoleFromBackend = data.user.role;
+          }
+
+          console.log(
+            "Extracted role before setting state:",
+            userRoleFromBackend
+          );
+
+          setIsLoggedIn(true);
+          setUserRole(userRoleFromBackend);
+          setModalMessage("เข้าสู่ระบบเรียบร้อยแล้ว");
+          handleCloseModal();
+        } else {
+          const errorData = await response.json();
+          setModalMessage(errorData.message || "อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+        }
+      }
+    } catch (error) {
+      setModalMessage("เกิดข้อผิดพลาดในการเชื่อมต่อ");
+      console.error("Fetch error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <header className="w-full h-16 bg-gray-800 text-white flex items-center justify-between px-5">
+      <nav className="flex items-center gap-2">
+        <TopMenuItem href="/" text="Home" />
+        <TopMenuItem href="/order" text="Order" />
+        {isLoggedIn && userRole === "admin" && (
+          <TopMenuItem href="/admin" text="Admin" />
+        )}
+      </nav>
+
+      {isLoggedIn ? (
+        <button
+          onClick={handleLogoutClick}
+          className="
+            py-2 px-4 rounded-md bg-red-600 text-white 
+            font-bold hover:bg-red-700 transition-colors
+          "
+        >
+          Logout
+        </button>
+      ) : (
+        <button
+          onClick={handleLoginClick}
+          className="
+            py-2 px-4 rounded-md bg-blue-600 text-white 
+            font-bold hover:bg-blue-700 transition-colors
+          "
+        >
+          Login
+        </button>
+      )}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md text-center">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">
+              {isRegisterMode ? "ลงทะเบียน" : "เข้าสู่ระบบ"}
+            </h2>
+
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              {isRegisterMode && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="ชื่อ"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                  />
+                  <input
+                    type="tel"
+                    placeholder="เบอร์โทรศัพท์"
+                    value={tel}
+                    onChange={(e) => setTel(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                  />
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="member">Member</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </>
+              )}
+              <input
+                type="email"
+                placeholder="อีเมล"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+              <input
+                type="password"
+                placeholder="รหัสผ่าน"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+
+              <div className="flex justify-between items-center pt-4">
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="
+                    py-2 px-4 rounded-md bg-gray-300 text-gray-800 
+                    font-bold hover:bg-gray-400 transition-colors
+                  "
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`
+                    py-2 px-4 rounded-md text-white 
+                    font-bold transition-colors
+                    ${
+                      isLoading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-blue-600 hover:bg-blue-700"
+                    }
+                  `}
+                >
+                  {isLoading
+                    ? "กำลังโหลด..."
+                    : isRegisterMode
+                    ? "ลงทะเบียน"
+                    : "ตกลง"}
+                </button>
+              </div>
+            </form>
+
+            {/* ข้อความสถานะหรือข้อความแจ้งเตือน */}
+            <p className="text-gray-600 my-4">{modalMessage}</p>
+
+            {/* ปุ่มสำหรับเปลี่ยนโหมด Login/Register */}
+            {isRegisterMode ? (
+              <p className="text-gray-600 mt-4">
+                มีบัญชีอยู่แล้ว?{" "}
+                <a
+                  onClick={() => setIsRegisterMode(false)}
+                  className="text-blue-600 hover:underline cursor-pointer"
+                >
+                  เข้าสู่ระบบ
+                </a>
+              </p>
+            ) : (
+              <p className="text-gray-600 mt-4">
+                ยังไม่มีบัญชี?{" "}
+                <a
+                  onClick={() => setIsRegisterMode(true)}
+                  className="text-blue-600 hover:underline cursor-pointer"
+                >
+                  ลงทะเบียน
+                </a>
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
