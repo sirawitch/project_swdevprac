@@ -10,18 +10,18 @@ export default function TopMenu() {
   const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // สถานะสำหรับฟอร์ม Login และ Register
+  // States for Login and Register forms
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [tel, setTel] = useState("");
   const [role, setRole] = useState("member");
 
-  // สถานะเพื่อสลับระหว่างฟอร์ม Login และ Register
+  // State to switch between Login and Register forms
   const [isRegisterMode, setIsRegisterMode] = useState(false);
 
-  // URL ของ Backend
-  const API_URL = "http://localhost:5001";
+  // Backend URL from Environment Variable
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleLoginClick = () => {
     setModalMessage("");
@@ -59,11 +59,11 @@ export default function TopMenu() {
         });
 
         if (response.ok) {
-          setModalMessage("สมัครสมาชิกสำเร็จแล้ว! กรุณาเข้าสู่ระบบ");
+          setModalMessage("Registration successful! Please log in.");
           setIsRegisterMode(false);
         } else {
           const errorData = await response.json();
-          setModalMessage(errorData.message || "การลงทะเบียนล้มเหลว");
+          setModalMessage(errorData.message || "Registration failed");
         }
       } else {
         const response = await fetch(`${API_URL}/api/v1/auth/login`, {
@@ -92,15 +92,15 @@ export default function TopMenu() {
 
           setIsLoggedIn(true);
           setUserRole(userRoleFromBackend);
-          setModalMessage("เข้าสู่ระบบเรียบร้อยแล้ว");
+          setModalMessage("Login successful");
           handleCloseModal();
         } else {
           const errorData = await response.json();
-          setModalMessage(errorData.message || "อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+          setModalMessage(errorData.message || "Invalid email or password");
         }
       }
     } catch (error) {
-      setModalMessage("เกิดข้อผิดพลาดในการเชื่อมต่อ");
+      setModalMessage("Connection error");
       console.error("Fetch error:", error);
     } finally {
       setIsLoading(false);
@@ -108,42 +108,43 @@ export default function TopMenu() {
   };
 
   return (
-    <header className="w-full h-16 bg-gray-800 text-white flex items-center justify-between px-5">
-      <nav className="flex items-center gap-2">
-        <TopMenuItem href="/" text="Home" />
-        <TopMenuItem href="/order" text="Order" />
-        {isLoggedIn && userRole === "admin" && (
-          <TopMenuItem href="/admin" text="Admin" />
-        )}
-      </nav>
-
-      {isLoggedIn ? (
-        <button
-          onClick={handleLogoutClick}
-          className="
-            py-2 px-4 rounded-md bg-red-600 text-white 
-            font-bold hover:bg-red-700 transition-colors
-          "
-        >
-          Logout
-        </button>
-      ) : (
-        <button
-          onClick={handleLoginClick}
-          className="
-            py-2 px-4 rounded-md bg-blue-600 text-white 
-            font-bold hover:bg-blue-700 transition-colors
-          "
-        >
-          Login
-        </button>
+    <header className="w-full h-16 bg-gray-800 text-white grid grid-cols-4 gap-16 items-center px-5">
+      <TopMenuItem href="/" text="Home" />
+      <TopMenuItem href="/order" text="Order" />
+      {isLoggedIn && userRole === "admin" && (
+        <TopMenuItem href="/admin" text="Admin" />
       )}
+
+      {/* Spacer to push the button to the last column */}
+      <div className="col-start-4 flex justify-end">
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogoutClick}
+            className="
+              py-2 px-4 rounded-md bg-red-600 text-white 
+              font-bold hover:bg-red-700 transition-colors
+            "
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={handleLoginClick}
+            className="
+              py-2 px-4 rounded-md bg-blue-600 text-white 
+              font-bold hover:bg-blue-700 transition-colors
+            "
+          >
+            Login
+          </button>
+        )}
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md text-center">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">
-              {isRegisterMode ? "ลงทะเบียน" : "เข้าสู่ระบบ"}
+              {isRegisterMode ? "Register" : "Login"}
             </h2>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -151,7 +152,7 @@ export default function TopMenu() {
                 <>
                   <input
                     type="text"
-                    placeholder="ชื่อ"
+                    placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -159,7 +160,7 @@ export default function TopMenu() {
                   />
                   <input
                     type="tel"
-                    placeholder="เบอร์โทรศัพท์"
+                    placeholder="Phone Number"
                     value={tel}
                     onChange={(e) => setTel(e.target.value)}
                     className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -177,7 +178,7 @@ export default function TopMenu() {
               )}
               <input
                 type="email"
-                placeholder="อีเมล"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -185,7 +186,7 @@ export default function TopMenu() {
               />
               <input
                 type="password"
-                placeholder="รหัสผ่าน"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -201,7 +202,7 @@ export default function TopMenu() {
                     font-bold hover:bg-gray-400 transition-colors
                   "
                 >
-                  ยกเลิก
+                  Cancel
                 </button>
                 <button
                   type="submit"
@@ -217,36 +218,36 @@ export default function TopMenu() {
                   `}
                 >
                   {isLoading
-                    ? "กำลังโหลด..."
+                    ? "Loading..."
                     : isRegisterMode
-                    ? "ลงทะเบียน"
-                    : "ตกลง"}
+                    ? "Register"
+                    : "Confirm"}
                 </button>
               </div>
             </form>
 
-            {/* ข้อความสถานะหรือข้อความแจ้งเตือน */}
+            {/* Status or alert message */}
             <p className="text-gray-600 my-4">{modalMessage}</p>
 
-            {/* ปุ่มสำหรับเปลี่ยนโหมด Login/Register */}
+            {/* Button to switch between Login/Register modes */}
             {isRegisterMode ? (
               <p className="text-gray-600 mt-4">
-                มีบัญชีอยู่แล้ว?{" "}
+                Already have an account?{" "}
                 <a
                   onClick={() => setIsRegisterMode(false)}
                   className="text-blue-600 hover:underline cursor-pointer"
                 >
-                  เข้าสู่ระบบ
+                  Login
                 </a>
               </p>
             ) : (
               <p className="text-gray-600 mt-4">
-                ยังไม่มีบัญชี?{" "}
+                Don't have an account?{" "}
                 <a
                   onClick={() => setIsRegisterMode(true)}
                   className="text-blue-600 hover:underline cursor-pointer"
                 >
-                  ลงทะเบียน
+                  Register
                 </a>
               </p>
             )}
