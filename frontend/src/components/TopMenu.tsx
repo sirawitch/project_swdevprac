@@ -28,9 +28,17 @@ export default function TopMenu() {
     setIsModalOpen(true);
   };
 
-  const handleLogoutClick = () => {
+  const handleLogoutClick = async () => {
+    const token = localStorage.getItem("token");
+    await fetch(`${API_URL}/api/v1/auth/logout`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
-    setUserRole("user");
+    setUserRole("guest");
     setIsModalOpen(false);
   };
 
@@ -77,14 +85,9 @@ export default function TopMenu() {
         if (response.ok) {
           const data = await response.json();
           console.log("Response data from backend:", data);
-
-          let userRoleFromBackend = "member";
-          if (data && data.role) {
-            userRoleFromBackend = data.role;
-          } else if (data && data.user && data.user.role) {
-            userRoleFromBackend = data.user.role;
-          }
-
+          let userRoleFromBackend = data.role;
+          // สมมติว่า response.data.token คือค่า token ที่ได้จาก API
+          localStorage.setItem("token", data.token);
           console.log(
             "Extracted role before setting state:",
             userRoleFromBackend
