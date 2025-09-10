@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import TopMenuItem from "./TopMenuItem";
-
 export default function TopMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);

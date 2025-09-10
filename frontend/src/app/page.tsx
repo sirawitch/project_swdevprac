@@ -178,7 +178,7 @@ export default function Home() {
             sku={toy.sku}
             name={toy.name}
             description={toy.description}
-            arrivalDate={new Date(toy.arrivalDate).toLocaleDateString()}
+            arrivalDate={toy.arrivalDate}
             availableQuota={toy.availableQuota}
             posterPicture={toy.posterPicture}
             onOrderClick={() => handleOrderClick(toy.sku)}
