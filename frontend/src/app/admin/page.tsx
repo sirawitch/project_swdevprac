@@ -22,7 +22,14 @@ interface ArtToy {
   // New field for arrival date
   arrivalDate: string;
 }
-
+interface Order {
+  _id: string;
+  artToy: {
+    _id: string;
+  };
+  quantity: number;
+  // Add other fields as needed
+}
 export default function AdminPage() {
   const [artToys, setArtToys] = useState<ArtToy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -183,6 +190,28 @@ export default function AdminPage() {
     }
 
     try {
+      const ordersResponse = await fetch(`${API_URL}/api/v1/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!ordersResponse.ok) {
+        throw new Error("Failed to fetch orders for pre-deletion check.");
+      }
+
+      const ordersData = await ordersResponse.json();
+      const hasRelatedOrders = ordersData.data.some(
+        (order: Order) => order.artToy._id === deletingArtToy._id
+      );
+
+      if (hasRelatedOrders) {
+        alert(
+          "ไม่สามารถลบสินค้านี้ได้ เนื่องจากมีการสั่งซื้อสินค้าชิ้นนี้อยู่"
+        );
+        setIsDeleteModalOpen(false);
+        return;
+      }
       const response = await fetch(
         `${API_URL}/api/v1/arttoys/${deletingArtToy._id}`,
         {
