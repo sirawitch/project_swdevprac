@@ -30,6 +30,16 @@ $ cd project_swdevprac
 
 ## 2. Frontend Setup
 
+### Environment Variables
+
+Create a `.env.local` file inside the `frontend` directory and add the following:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5001
+```
+
+### Install & Run
+
 ```bash
 $ cd frontend
 $ npm install
@@ -42,6 +52,26 @@ The website is available at http://localhost:3000
 ---
 
 ## 3. Backend Setup
+
+### Environment Variables
+
+Create a `config.env` file inside the `backend/config` directory and add the following:
+
+```env
+PORT=5001
+NODE_ENV=development
+
+MONGO_URI=
+JWT_SECRET=
+JWT_EXPIRE=
+JWT_COOKIE_EXPIRE=
+
+FRONTEND_URL=http://localhost:3000
+```
+
+> 🔐 __Note:__ Fill in the values for `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRE`, and `JWT_COOKIE_EXPIRE` as per your project's requirements.
+
+### Install & Run
 
 ```bash
 $ cd backend
