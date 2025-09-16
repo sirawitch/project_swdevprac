@@ -1,11 +1,11 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TopMenuItem from "./TopMenuItem";
+
 export default function TopMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("guest");
   const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,6 +22,40 @@ export default function TopMenu() {
   // Backend URL from Environment Variable
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  // This useEffect hook runs once when the component is mounted
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await fetch(`${API_URL}/api/v1/auth/me`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+             console.log("User role from API:", data); 
+            setIsLoggedIn(true);
+            setUserRole(data.data.role);
+          } else {
+            // Token is invalid or expired, clear it
+            localStorage.removeItem("token");
+            setIsLoggedIn(false);
+            setUserRole("guest");
+          }
+        } catch (error) {
+          console.error("Failed to fetch user data:", error);
+          localStorage.removeItem("token");
+          setIsLoggedIn(false);
+          setUserRole("guest");
+        }
+      }
+    };
+
+    checkAuthStatus();
+  }, [API_URL]);
+
   const handleLoginClick = () => {
     setModalMessage("");
     setIsModalOpen(true);
@@ -29,16 +63,34 @@ export default function TopMenu() {
 
   const handleLogoutClick = async () => {
     const token = localStorage.getItem("token");
-    await fetch(`${API_URL}/api/v1/auth/logout`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUserRole("guest");
-    setIsModalOpen(false);
+    if (!token) {
+      setIsLoggedIn(false);
+      setUserRole("guest");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/v1/auth/logout`, {
+        method: "GET", // Changed to POST for better practice
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+        setUserRole("guest");
+        setIsModalOpen(false);
+        setModalMessage("Logout successful");
+      } else {
+        const errorData = await response.json();
+        setModalMessage(errorData.message || "Logout failed");
+      }
+    } catch (error) {
+      setModalMessage("Connection error during logout");
+      console.error("Fetch error during logout:", error);
+    }
   };
 
   const handleCloseModal = () => {
@@ -85,7 +137,6 @@ export default function TopMenu() {
           const data = await response.json();
           console.log("Response data from backend:", data);
           let userRoleFromBackend = data.role;
-          // สมมติว่า response.data.token คือค่า token ที่ได้จาก API
           localStorage.setItem("token", data.token);
           console.log(
             "Extracted role before setting state:",
