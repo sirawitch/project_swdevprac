@@ -32,41 +32,50 @@ export default function Card({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-      <div className="relative w-full h-64 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] w-full max-w-[50%]">
+      {/* Image Section */}
+      <div className="relative w-full aspect-[4/3] bg-gray-100">
         {posterPicture ? (
           <Image
             src={posterPicture}
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="w-full h-full"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority
           />
         ) : (
-          <div className="flex items-center justify-center w-full h-full bg-gray-200">
-            <span className="text-gray-500">No Image</span>
+          <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
+            No Image
           </div>
         )}
       </div>
-      <div className="p-4">
-        <h3 className="text-xl font-bold text-gray-800">{name}</h3>
-        <p className="text-sm text-gray-500 mb-2">SKU: {sku}</p>
-        <p className="text-gray-600 text-sm mb-3">{description}</p>
-        <div className="flex items-center text-gray-500 text-sm mb-2">
-          <CalendarIcon className="h-4 w-4 mr-1" />
+
+      {/* Content Section */}
+      <div className="p-5 space-y-2">
+        <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
+        <p className="text-sm text-gray-500">SKU: {sku}</p>
+        <p className="text-sm text-gray-600">{description}</p>
+
+        <div className="flex items-center text-gray-500 text-sm mt-2">
+          <CalendarIcon className="w-4 h-4 mr-1" />
           <span>{formattedDate}</span>
         </div>
-        <p className="text-gray-600 font-semibold text-sm">
+
+        <p className="text-sm font-semibold text-gray-700">
           Available Quota: {availableQuota}
         </p>
-        <div className="mt-4">
-          <button
-            onClick={onOrderClick}
-            className="cursor-pointer w-full py-2 px-4 rounded-md font-bold transition-colors bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Order this toy
-          </button>
-        </div>
+
+        <button
+          onClick={onOrderClick}
+          className="cursor-pointer mt-4 w-full py-2 px-4 rounded-full font-medium 
+          bg-gradient-to-r from-slate-600 to-gray-700 
+          text-white shadow-sm hover:shadow-md 
+          hover:from-emerald-600 hover:to-teal-600 
+          transition-all duration-300"
+        >
+          Order This Toy!
+        </button>
       </div>
     </div>
   );
