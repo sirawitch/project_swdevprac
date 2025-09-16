@@ -23,12 +23,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- return (
-   <html>
-     <body>
-       <TopMenu />
-       <div>{children}</div>
-     </body>
-   </html>
- );
+  return (
+    <html>
+      <body>
+        <TopMenu />
+        <div>{children}</div>
+      </body>
+    </html>
+  );
 }

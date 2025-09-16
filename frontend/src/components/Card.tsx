@@ -62,7 +62,7 @@ export default function Card({
         <div className="mt-4">
           <button
             onClick={onOrderClick}
-            className="w-full py-2 px-4 rounded-md font-bold transition-colors bg-blue-600 text-white hover:bg-blue-700"
+            className="cursor-pointer w-full py-2 px-4 rounded-md font-bold transition-colors bg-blue-600 text-white hover:bg-blue-700"
           >
             Order this toy
           </button>

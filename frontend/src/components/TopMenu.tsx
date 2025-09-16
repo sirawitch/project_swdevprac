@@ -35,7 +35,7 @@ export default function TopMenu() {
           });
           if (response.ok) {
             const data = await response.json();
-             console.log("User role from API:", data); 
+            console.log("User role from API:", data); 
             setIsLoggedIn(true);
             setUserRole(data.data.role);
           } else {
@@ -161,42 +161,38 @@ export default function TopMenu() {
   };
 
   return (
-    <header className="w-full h-16 bg-gray-800 text-white grid grid-cols-4 gap-16 items-center px-5">
-      <TopMenuItem href="/" text="Home" />
-      <TopMenuItem href="/order" text="Order" />
-      {isLoggedIn && userRole === "admin" && (
-        <TopMenuItem href="/admin" text="Admin" />
-      )}
+    <header className="w-full h-20 bg-gray-900 text-white flex items-center justify-between px-8 shadow-md">
+      <div className="flex items-center space-x-10">
+        <TopMenuItem href="/" text="Home" />
+        <TopMenuItem href="/order" text="Order" />
+        {isLoggedIn && userRole === "admin" && (
+          <TopMenuItem href="/admin" text="Admin" />
+        )}
+      </div>
 
-      {/* Spacer to push the button to the last column */}
-      <div className="col-start-4 flex justify-end">
+      <div>
         {isLoggedIn ? (
           <button
             onClick={handleLogoutClick}
-            className="
-              py-2 px-4 rounded-md bg-red-600 text-white 
-              font-bold hover:bg-red-700 transition-colors
-            "
+            className="group cursor-pointer py-2 px-5 rounded-full bg-gradient-to-r from-rose-500 to-red-600 text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
-            Logout
+            <span className="group-hover:opacity-90">Logout</span>
           </button>
         ) : (
           <button
             onClick={handleLoginClick}
-            className="
-              py-2 px-4 rounded-md bg-blue-600 text-white 
-              font-bold hover:bg-blue-700 transition-colors
-            "
+            className="group cursor-pointer py-2 px-5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
-            Login
+            <span className="group-hover:opacity-90">Login</span>
           </button>
         )}
       </div>
-
+      
+      {/* Login/Register Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md text-center">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">
+          <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-2xl relative">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
               {isRegisterMode ? "Register" : "Login"}
             </h2>
 
@@ -205,7 +201,7 @@ export default function TopMenu() {
                 <>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Full Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -251,7 +247,7 @@ export default function TopMenu() {
                   type="button"
                   onClick={handleCloseModal}
                   className="
-                    py-2 px-4 rounded-md bg-gray-300 text-gray-800 
+                    cursor-pointer py-2 px-4 rounded-md bg-gray-300 text-gray-800 
                     font-bold hover:bg-gray-400 transition-colors
                   "
                 >
@@ -260,21 +256,21 @@ export default function TopMenu() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`
-                    py-2 px-4 rounded-md text-white 
-                    font-bold transition-colors
+                  className={`cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
                     ${
                       isLoading
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 hover:bg-blue-700"
+                        : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105"
                     }
                   `}
                 >
-                  {isLoading
-                    ? "Loading..."
-                    : isRegisterMode
-                    ? "Register"
-                    : "Confirm"}
+                  {isLoading ? (
+                    <span className="animate-pulse">Loading...</span>
+                  ) : isRegisterMode ? (
+                    "Register"
+                  ) : (
+                    "Confirm"
+                  )}
                 </button>
               </div>
             </form>
