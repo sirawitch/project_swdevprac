@@ -32,7 +32,7 @@ export default function Card({
   });
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] w-full max-w-[50%]">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] w-full max-w-[70%]">
       {/* Image Section */}
       <div className="relative w-full aspect-[4/3] bg-gray-100">
         {posterPicture ? (
