@@ -4,17 +4,25 @@ Members:
 - Bhuribhat Ratanasanguanvongs
 - Sirawitch Tiyasuttipun
 
-## Project Setup Instructions
+## 🚀 Full Stack App Project Setup Instructions
 
-Follow the steps below to set up and run the project locally.
+This is a full-stack application with a **React (Next.js)** frontend and a **Node.js/Express** backend. The project is containerized using **Docker** for seamless development and deployment.
 
 ## 📁 Project Structure
 
 ```
 project-root/
-├── backend/     # Backend source code (Node.js)
-├── frontend/    # Frontend source code (e.g., React/Vue)
-└── README.md    # Project setup and documentation
+├── docker-compose.yml         # Orchestrates frontend and backend containers
+├── frontend/                  # Frontend (Next.js)
+│   ├── Dockerfile             # Docker config for frontend
+│   ├── .env.local             # Frontend environment variables
+│   └── ...                    # Other frontend files
+├── backend/                   # Backend (Node.js + Express)
+│   ├── Dockerfile             # Docker config for backend
+│   ├── config/
+│   │   └── config.env         # Backend environment variables
+│   └── ...                    # Other backend files
+└── README.md                  # Project setup and documentation
 ```
 
 ---
@@ -81,6 +89,34 @@ $ npm run dev
 
 This will install the backend dependencies and start the backend server in development mode.  
 The API document is available at http://localhost:5001/api-docs
+
+---
+
+### Run Development Servers:
+
+**Backend & Frontend:**
+
+```bash
+$ make dev
+```
+
+This will run the backend and frontend development servers.    
+Open your browser and navigate to the frontend development server URL (e.g., `http://localhost:3000`).
+
+**Docker-Compose:**
+
+```bash
+$ docker-compose up -d --build    # To run in background (detached mode)
+$ docker-compose down             # To stop the process
+```
+
+Where:
+- The -f flag is used to specify the file path of the Compose file.
+- The -d flag is used to launch the services in the background (i.e. detached mode).
+
+Website:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:5001/api-docs
 
 ---
 
