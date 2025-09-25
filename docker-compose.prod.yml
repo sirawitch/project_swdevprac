@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: backend-node-api
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./backend/config/config.env
+    environment:
+      NODE_ENV: production
+
+  nginx:
+    build:
+      context: .              # Build from the project root so you can access both frontend and nginx
+      dockerfile: Dockerfile  # If you have a custom NGINX Dockerfile
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

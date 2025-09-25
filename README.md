@@ -12,16 +12,23 @@ This is a full-stack application with a **React (Next.js)** frontend and a **Nod
 
 ```
 project-root/
-├── docker-compose.yml         # Orchestrates frontend and backend containers
 ├── frontend/                  # Frontend (Next.js)
-│   ├── Dockerfile             # Docker config for frontend
+│   ├── Dockerfile             # Docker config for frontend (development)
+│   ├── Dockerfile.prod        # Docker config for frontend (production)
 │   ├── .env.local             # Frontend environment variables
 │   └── ...                    # Other frontend files
 ├── backend/                   # Backend (Node.js + Express)
-│   ├── Dockerfile             # Docker config for backend
+│   ├── Dockerfile             # Docker config for backend (development)
+│   ├── Dockerfile.prod        # Docker config for backend (production)
 │   ├── config/
 │   │   └── config.env         # Backend environment variables
 │   └── ...                    # Other backend files
+├── nginx/
+│   ├── Dockerfile             # Docker config for production
+│   └── default.conf           # Serving static frontend files
+│
+├── docker-compose.dev.yml     # Orchestrates frontend and backend containers (development)
+├── docker-compose.prod.yml    # Orchestrates frontend and backend containers (production)
 └── README.md                  # Project setup and documentation
 ```
 
@@ -94,7 +101,7 @@ The API document is available at http://localhost:5001/api-docs
 
 ### Run Development Servers:
 
-**Backend & Frontend:**
+#### **Backend & Frontend:**
 
 ```bash
 $ make dev
@@ -103,11 +110,20 @@ $ make dev
 This will run the backend and frontend development servers.    
 Open your browser and navigate to the frontend development server URL (e.g., `http://localhost:3000`).
 
-**Docker-Compose:**
+#### **Docker-Compose:**
+
+Start development environment:
 
 ```bash
-$ docker-compose up -d --build    # To run in background (detached mode)
-$ docker-compose down             # To stop the process
+$ docker-compose -f docker-compose.dev.yml up -d --build    # To run in background (detached mode)
+$ docker-compose -f docker-compose.dev.yml down             # To stop the process
+```
+
+Start production deployment:
+
+```bash
+$ docker-compose -f docker-compose.prod.yml up -d --build    # To run in background (detached mode)
+$ docker-compose -f docker-compose.prod.yml down             # To stop the process
 ```
 
 Where:
