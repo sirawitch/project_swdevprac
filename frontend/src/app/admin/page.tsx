@@ -603,27 +603,32 @@ export default function AdminPage() {
                 <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 text-center"
+                    className="text-lg font-medium leading-6 text-gray-900 text-center mb-4"
                   >
                     Confirm Deletion
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 text-center">
-                      Are you sure you want to delete the product **
-                      {deletingArtToy?.name}**? This action cannot be undone.
+                      Are you sure you want to delete the product{' '}
+                      <strong className="font-semibold text-gray-900">{deletingArtToy?.name}</strong>
+                      ? This action cannot be undone.
                     </p>
                   </div>
-                  <div className="mt-4 flex justify-center space-x-4">
+                  <div className="mt-4 flex justify-center space-x-6">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
+                        bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800
+                        shadow-md hover:shadow-lg hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                       onClick={handleConfirmDelete}
                     >
                       Delete
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                      className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                        bg-gradient-to-r from-zinc-200 to-zinc-300 hover:from-zinc-300 hover:to-zinc-400
+                        shadow-md hover:shadow-lg hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
                       onClick={() => setIsDeleteModalOpen(false)}
                     >
                       Cancel
