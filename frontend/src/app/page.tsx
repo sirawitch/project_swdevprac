@@ -213,25 +213,45 @@ export default function Home() {
 
             <div className="flex items-center justify-center space-x-4 mt-6">
               <button
-                className="cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                className={`
+                  p-2 rounded-full transition-colors
+                  ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 
+                    ? 'bg-gray-300 cursor-not-allowed text-gray-400' 
+                    : 'bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600'}
+                `}
                 onClick={handleDecreaseQuantity}
-                disabled={orderQuantity <= 1}
+                disabled={selectedToy?.availableQuota === 0 || orderQuantity <= 1}
               >
-                <MinusIcon className="w-5 h-5 text-gray-600 transition-colors duration-300 cursor-pointer" />
+                <MinusIcon
+                  className={`w-5 h-5 transition-colors duration-300 ${
+                    selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                      ? 'text-gray-400 cursor-not-allowed'
+                      : 'text-gray-600 cursor-pointer'
+                  }`}
+                />
               </button>
               <span className="text-2xl font-bold text-gray-800">
                 {orderQuantity}
               </span>
               <button
-                className="cursor-pointer p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className={`
+                  p-2 rounded-full transition-colors
+                  ${
+                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota
+                      ? 'bg-blue-300 cursor-not-allowed text-white'
+                      : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'
+                  }
+                `}
                 onClick={handleIncreaseQuantity}
-                disabled={
-                  selectedToy
-                    ? orderQuantity >= selectedToy.availableQuota
-                    : true
-                }
+                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota}
               >
-                <PlusIcon className="w-5 h-5 text-white transition-colors duration-300 cursor-pointer" />
+                <PlusIcon
+                  className={`w-5 h-5 transition-colors duration-300 ${
+                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota
+                      ? 'text-white cursor-not-allowed'
+                      : 'text-white cursor-pointer'
+                  }`}
+                />
               </button>
             </div>
 
