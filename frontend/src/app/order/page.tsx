@@ -323,18 +323,18 @@ export default function OrdersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {format(new Date(order.createdAt), "dd MMM yyyy")}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       onClick={() => handleEditClick(order)}
                       className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors"
                     >
-                      <PencilSquareIcon className="h-5 w-5" />
+                      <PencilSquareIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
                     </button>
                     <button
                       onClick={() => handleDeleteClick(order)}
                       className="cursor-pointer text-red-600 hover:text-red-900 transition-colors"
                     >
-                      <TrashIcon className="h-5 w-5" />
+                      <TrashIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
                     </button>
                   </td>
                 </tr>
