@@ -326,7 +326,7 @@ export default function OrdersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       onClick={() => handleEditClick(order)}
-                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors"
+                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
                     >
                       <PencilSquareIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
                     </button>
@@ -405,7 +405,7 @@ export default function OrdersPage() {
                       onClick={handleDecreaseQuantity}
                       disabled={editQuantity <= 1}
                     >
-                      <MinusIcon className="w-5 h-5 text-gray-600" />
+                      <MinusIcon className="w-5 h-5 text-gray-600 transition-colors duration-300 cursor-pointer" />
                     </button>
                     <span className="text-2xl font-bold text-gray-800">
                       {editQuantity}
@@ -415,7 +415,7 @@ export default function OrdersPage() {
                       onClick={handleIncreaseQuantity}
                       disabled={editQuantity >= 100}
                     >
-                      <PlusIcon className="w-5 h-5" />
+                      <PlusIcon className="w-5 h-5 text-white transition-colors duration-300 cursor-pointer" />
                     </button>
                   </div>
 

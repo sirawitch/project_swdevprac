@@ -217,7 +217,7 @@ export default function Home() {
                 onClick={handleDecreaseQuantity}
                 disabled={orderQuantity <= 1}
               >
-                <MinusIcon className="w-5 h-5 text-gray-600" />
+                <MinusIcon className="w-5 h-5 text-gray-600 transition-colors duration-300 cursor-pointer" />
               </button>
               <span className="text-2xl font-bold text-gray-800">
                 {orderQuantity}
@@ -231,7 +231,7 @@ export default function Home() {
                     : true
                 }
               >
-                <PlusIcon className="w-5 h-5" />
+                <PlusIcon className="w-5 h-5 text-white transition-colors duration-300 cursor-pointer" />
               </button>
             </div>
 

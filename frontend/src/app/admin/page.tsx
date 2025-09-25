@@ -385,7 +385,7 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       onClick={() => handleOpenModal(artToy)}
-                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors"
+                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
                     >
                       <PencilSquareIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
                     </button>
