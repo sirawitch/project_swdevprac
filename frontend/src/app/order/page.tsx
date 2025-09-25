@@ -11,7 +11,11 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { Dialog, Transition } from "@headlessui/react";
+import { 
+  Dialog, 
+  DialogPanel, 
+  Transition 
+} from "@headlessui/react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -373,10 +377,11 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <button
-                    className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                    className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseEditModal}
+                    aria-label="Close"
                   >
                     <XMarkIcon className="h-6 w-6" />
                   </button>
@@ -439,7 +444,7 @@ export default function OrdersPage() {
                       Save Changes
                     </button>
                   </div>
-                </Dialog.Panel>
+                </DialogPanel>
               </Transition.Child>
             </div>
           </div>
@@ -474,10 +479,17 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <button
+                      className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+                      onClick={() => setIsDeleteModalOpen(false)}
+                      aria-label="Close"
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                  </button>
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 text-center mb-4"
+                    className="text-2xl font-bold mb-4 text-center text-gray-800 mb-4"
                   >
                     Confirm Deletion
                   </Dialog.Title>
