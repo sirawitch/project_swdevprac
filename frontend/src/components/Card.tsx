@@ -69,10 +69,9 @@ export default function Card({
         <button
           onClick={onOrderClick}
           className="cursor-pointer mt-4 w-full py-2 px-4 rounded-full font-medium 
-          bg-gradient-to-r from-slate-600 to-gray-700 
-          text-white shadow-sm hover:shadow-md 
-          hover:from-emerald-600 hover:to-teal-600 
-          transition-all duration-300"
+          bg-gradient-to-r from-slate-600 to-gray-700 text-white shadow-sm
+          hover:shadow-md hover:from-emerald-600 hover:to-teal-600 
+          transition-all duration-300 ease-in-out"
         >
           Order This Toy!
         </button>

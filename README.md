@@ -27,8 +27,8 @@ project-root/
 │   ├── Dockerfile             # Docker config for production
 │   └── default.conf           # Serving static frontend files
 │
-├── docker-compose.dev.yml     # Orchestrates frontend and backend containers (development)
-├── docker-compose.prod.yml    # Orchestrates frontend and backend containers (production)
+├── docker-compose.dev.yml     # Orchestrates frontend & backend containers (development)
+├── docker-compose.prod.yml    # Orchestrates nginx & backend containers (production)
 └── README.md                  # Project setup and documentation
 ```
 

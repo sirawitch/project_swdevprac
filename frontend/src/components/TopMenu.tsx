@@ -246,10 +246,10 @@ export default function TopMenu() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="
-                    cursor-pointer py-2 px-4 rounded-md bg-gray-300 text-gray-800 
-                    font-bold hover:bg-gray-400 transition-colors
-                  "
+                  className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                  bg-gradient-to-r from-zinc-200 to-zinc-300
+                  hover:from-zinc-300 hover:to-zinc-400
+                  shadow-md hover:shadow-lg hover:scale-105"
                 >
                   Cancel
                 </button>

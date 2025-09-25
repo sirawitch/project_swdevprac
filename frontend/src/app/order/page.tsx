@@ -326,13 +326,13 @@ export default function OrdersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                     <button
                       onClick={() => handleEditClick(order)}
-                      className="text-blue-600 hover:text-blue-900 transition-colors"
+                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors"
                     >
                       <PencilSquareIcon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => handleDeleteClick(order)}
-                      className="text-red-600 hover:text-red-900 transition-colors"
+                      className="cursor-pointer text-red-600 hover:text-red-900 transition-colors"
                     >
                       <TrashIcon className="h-5 w-5" />
                     </button>
@@ -375,7 +375,7 @@ export default function OrdersPage() {
               >
                 <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                    className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseEditModal}
                   >
                     <XMarkIcon className="h-6 w-6" />
@@ -401,7 +401,7 @@ export default function OrdersPage() {
 
                   <div className="flex items-center justify-center space-x-4 mt-6">
                     <button
-                      className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                      className="cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
                       onClick={handleDecreaseQuantity}
                       disabled={editQuantity <= 1}
                     >
@@ -411,7 +411,7 @@ export default function OrdersPage() {
                       {editQuantity}
                     </span>
                     <button
-                      className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      className="cursor-pointer p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                       onClick={handleIncreaseQuantity}
                       disabled={editQuantity >= 100}
                     >
@@ -422,14 +422,18 @@ export default function OrdersPage() {
                   <div className="flex justify-end space-x-4 mt-6">
                     <button
                       type="button"
-                      className="py-2 px-4 rounded-md bg-gray-300 text-gray-800 font-bold hover:bg-gray-400 transition-colors"
+                      className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                      bg-gradient-to-r from-zinc-200 to-zinc-300
+                      hover:from-zinc-300 hover:to-zinc-400
+                      shadow-md hover:shadow-lg hover:scale-105"
                       onClick={handleCloseEditModal}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="py-2 px-4 rounded-md bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors"
+                      className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
+                      bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105"
                       onClick={handleSaveEdit}
                     >
                       Save Changes

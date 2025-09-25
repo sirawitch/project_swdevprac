@@ -22,6 +22,7 @@ interface ArtToy {
   // New field for arrival date
   arrivalDate: string;
 }
+
 interface Order {
   _id: string;
   artToy: {
@@ -30,6 +31,7 @@ interface Order {
   quantity: number;
   // Add other fields as needed
 }
+
 export default function AdminPage() {
   const [artToys, setArtToys] = useState<ArtToy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -284,7 +286,7 @@ export default function AdminPage() {
         <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center space-x-2 py-2 px-4 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700 transition-colors"
+          className="cursor-pointer flex items-center space-x-2 py-2 px-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
         >
           <PlusIcon className="h-5 w-5" />
           <span>Add New Product</span>
@@ -383,13 +385,13 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
                     <button
                       onClick={() => handleOpenModal(artToy)}
-                      className="text-blue-600 hover:text-blue-900 transition-colors"
+                      className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors"
                     >
                       <PencilSquareIcon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => handleDeleteClick(artToy)}
-                      className="text-red-600 hover:text-red-900 transition-colors"
+                      className="cursor-pointer text-red-600 hover:text-red-900 transition-colors"
                     >
                       <TrashIcon className="h-5 w-5" />
                     </button>
@@ -427,7 +429,7 @@ export default function AdminPage() {
               >
                 <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                    className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseModal}
                   >
                     <XMarkIcon className="h-6 w-6" />
@@ -546,14 +548,18 @@ export default function AdminPage() {
                     <div className="flex justify-end space-x-4">
                       <button
                         type="button"
-                        className="py-2 px-4 rounded-md bg-gray-300 text-gray-800 font-bold hover:bg-gray-400 transition-colors"
+                        className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                        bg-gradient-to-r from-zinc-200 to-zinc-300
+                        hover:from-zinc-300 hover:to-zinc-400
+                        shadow-md hover:shadow-lg hover:scale-105"
                         onClick={handleCloseModal}
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="py-2 px-4 rounded-md bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors"
+                        className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
+                        bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105"
                       >
                         {editingArtToy ? "Save Changes" : "Add Product"}
                       </button>

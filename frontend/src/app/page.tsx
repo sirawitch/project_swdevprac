@@ -191,7 +191,7 @@ export default function Home() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-lg w-full m-4">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
               onClick={() => setIsModalOpen(false)}
             >
               <XMarkIcon className="h-6 w-6" />
@@ -213,7 +213,7 @@ export default function Home() {
 
             <div className="flex items-center justify-center space-x-4 mt-6">
               <button
-                className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                className="cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
                 onClick={handleDecreaseQuantity}
                 disabled={orderQuantity <= 1}
               >
@@ -223,7 +223,7 @@ export default function Home() {
                 {orderQuantity}
               </span>
               <button
-                className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className="cursor-pointer p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                 onClick={handleIncreaseQuantity}
                 disabled={
                   selectedToy
@@ -238,14 +238,18 @@ export default function Home() {
             <div className="flex justify-end space-x-4 mt-6">
               <button
                 type="button"
-                className="py-2 px-4 rounded-md bg-gray-300 text-gray-800 font-bold hover:bg-gray-400 transition-colors"
                 onClick={() => setIsModalOpen(false)}
+                className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                bg-gradient-to-r from-zinc-200 to-zinc-300
+                hover:from-zinc-300 hover:to-zinc-400
+                shadow-md hover:shadow-lg hover:scale-105"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="py-2 px-4 rounded-md bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors"
+                className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
+                bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105"
                 onClick={() => handleOrderSubmit(selectedToy._id)}
               >
                 Confirm
