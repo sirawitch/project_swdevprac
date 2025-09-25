@@ -9,9 +9,11 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { 
-  Dialog, 
-  DialogPanel, 
-  Transition 
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild
 } from "@headlessui/react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -409,7 +411,7 @@ export default function AdminPage() {
 
       <Transition show={isModalOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={handleCloseModal}>
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -419,10 +421,10 @@ export default function AdminPage() {
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50" />
-          </Transition.Child>
+          </TransitionChild>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
@@ -431,7 +433,7 @@ export default function AdminPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <button
                     className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseModal}
@@ -439,12 +441,12 @@ export default function AdminPage() {
                   >
                     <XMarkIcon className="h-6 w-6" />
                   </button>
-                  <Dialog.Title
+                  <DialogTitle
                     as="h3"
                     className="text-2xl font-bold mb-4 text-center text-gray-800"
                   >
                     {editingArtToy ? "Edit Art Toy" : "Add New Art Toy"}
-                  </Dialog.Title>
+                  </DialogTitle>
                   <form onSubmit={handleSave} className="space-y-4">
                     <div>
                       <label
@@ -570,8 +572,8 @@ export default function AdminPage() {
                       </button>
                     </div>
                   </form>
-                </Dialog.Panel>
-              </Transition.Child>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </div>
         </Dialog>
@@ -583,7 +585,7 @@ export default function AdminPage() {
           className="relative z-50"
           onClose={() => setIsDeleteModalOpen(false)}
         >
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -593,10 +595,10 @@ export default function AdminPage() {
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50" />
-          </Transition.Child>
+          </TransitionChild>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
@@ -613,12 +615,12 @@ export default function AdminPage() {
                     >
                       <XMarkIcon className="h-6 w-6" />
                   </button>
-                  <Dialog.Title
+                  <DialogTitle
                     as="h3"
                     className="text-2xl font-bold mb-4 text-center text-gray-800 mb-4"
                   >
                     Confirm Deletion
-                  </Dialog.Title>
+                  </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 text-center">
                       Are you sure you want to delete the product{' '}
@@ -647,7 +649,7 @@ export default function AdminPage() {
                     </button>
                   </div>
                 </DialogPanel>
-              </Transition.Child>
+              </TransitionChild>
             </div>
           </div>
         </Dialog>
