@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import React from "react";
@@ -13,6 +13,7 @@ interface CardProps {
   posterPicture: string;
   onOrderClick: () => void;
   userRole: string;
+  theme: string;
 }
 
 export default function Card({
@@ -24,6 +25,7 @@ export default function Card({
   posterPicture,
   onOrderClick,
   userRole,
+  theme,
 }: CardProps) {
   const formattedDate = new Date(arrivalDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -31,8 +33,16 @@ export default function Card({
     day: "numeric",
   });
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] w-full max-w-[70%]">
+    <div
+      className={`${bgClass} ${shadowClass} rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] w-full max-w-[70%]`}
+    >
       {/* Image Section */}
       <div className="relative w-full aspect-[4/3] bg-gray-100">
         {posterPicture ? (
@@ -53,16 +63,16 @@ export default function Card({
 
       {/* Content Section */}
       <div className="p-5 space-y-2">
-        <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-        <p className="text-sm text-gray-500">SKU: {sku}</p>
-        <p className="text-sm text-gray-600">{description}</p>
+        <h3 className={`text-lg font-semibold ${textPrimary}`}>{name}</h3>
+        <p className={`text-sm ${textSecondary}`}>SKU: {sku}</p>
+        <p className={`text-sm ${textPrimary}`}>{description}</p>
 
-        <div className="flex items-center text-gray-500 text-sm mt-2">
+        <div className={`flex items-center ${textSecondary} text-sm mt-2`}>
           <CalendarIcon className="w-4 h-4 mr-1" />
           <span>{formattedDate}</span>
         </div>
 
-        <p className="text-sm font-semibold text-gray-700">
+        <p className={`text-sm font-semibold ${textPrimary}`}>
           Available Quota: {availableQuota}
         </p>
 

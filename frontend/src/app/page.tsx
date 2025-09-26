@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { XMarkIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Card from "@/components/Card";
+import ThemeToggle from "@/components/ThemeToggle";
+import useTheme from '../hooks/useTheme';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -25,6 +27,9 @@ export default function Home() {
   const [userRole, setUserRole] = useState<string>("guest");
   const [selectedToy, setSelectedToy] = useState<ArtToy | null>(null);
   const [orderQuantity, setOrderQuantity] = useState(1);
+  const [theme, setTheme] = useTheme();
+
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   const fetchArtToys = async () => {
     setIsLoading(true);
@@ -166,6 +171,7 @@ export default function Home() {
 
   return (
     <main className="p-8">
+      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
         Available Art Toys
       </h1>
@@ -182,6 +188,7 @@ export default function Home() {
               posterPicture={toy.posterPicture}
               onOrderClick={() => handleOrderClick(toy.sku)}
               userRole={userRole}
+              theme={theme}
             />
           </div>
         ))}

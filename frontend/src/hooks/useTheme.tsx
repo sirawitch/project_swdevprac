@@ -2,8 +2,18 @@ import { useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
 
-const useTheme = (): [Theme, (theme: Theme) => void] => {
-    const [theme, setTheme] = useState<Theme>('light');
+const getInitialTheme = () => {
+    if (typeof window !== 'undefined') {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+            return storedTheme;
+        }
+    }
+    return 'light'; // default fallback
+};
+
+const useTheme = () => {
+    const [theme, setTheme] = useState<string>(getInitialTheme);
 
     // On first mount, sync with localStorage or system preference
     useEffect(() => {
@@ -25,7 +35,7 @@ const useTheme = (): [Theme, (theme: Theme) => void] => {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    return [theme, setTheme];
+    return [theme, setTheme] as const;
 };
 
 export default useTheme;
