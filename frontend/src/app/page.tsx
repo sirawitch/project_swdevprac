@@ -167,10 +167,9 @@ export default function Home() {
   }
 
   // Set background and text colors based on theme
-  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const bgClass = theme === 'dark' ? 'bg-black' : 'bg-white';
   const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
   const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
-  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
 
   return (
     <main className="p-8">
@@ -197,17 +196,17 @@ export default function Home() {
 
       {isModalOpen && selectedToy && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-lg w-full m-4">
+          <div className={`relative ${bgClass} rounded-lg shadow-lg p-6 max-w-lg w-full m-4`}>
             <button
               className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
               onClick={() => setIsModalOpen(false)}
             >
               <XMarkIcon className="h-6 w-6" />
             </button>
-            <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
+            <h2 className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}>
               Confirm Order for {selectedToy.name}
             </h2>
-            <div className="text-gray-600 mb-4 space-y-2">
+            <div className={`${textSecondary} mb-4 space-y-2`}>
               <p>
                 <strong>SKU:</strong> {selectedToy.sku}
               </p>
@@ -238,7 +237,7 @@ export default function Home() {
                   }`}
                 />
               </button>
-              <span className="text-2xl font-bold text-gray-800">
+              <span className={`text-2xl font-bold ${textPrimary}`}>
                 {orderQuantity}
               </span>
               <button

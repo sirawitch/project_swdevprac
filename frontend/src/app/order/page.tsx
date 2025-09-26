@@ -251,41 +251,41 @@ export default function OrdersPage() {
   }
 
   // Set background and text colors based on theme
-  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const bgClass = theme === 'dark' ? 'bg-black' : 'bg-white';
+  const bgInput = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
   const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
   const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
-  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
 
   return (
     <main className="p-8">
       <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>
         All Orders
       </h1>
-      <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-6">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className={`overflow-x-auto ${bgInput} rounded-lg shadow-lg p-6`}>
+        <table className={`min-w-full divide-y divide-gray-200`}>
+          <thead className={`${bgInput}`}>
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Order ID
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Art Toy
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Quantity
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 <div className="flex items-center">
                   <UserIcon className="h-4 w-4 mr-2" />
@@ -294,7 +294,7 @@ export default function OrdersPage() {
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 <div className="flex items-center">
                   <TruckIcon className="h-4 w-4 mr-2" />
@@ -303,7 +303,7 @@ export default function OrdersPage() {
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Actions
               </th>
@@ -314,7 +314,7 @@ export default function OrdersPage() {
               <tr>
                 <td
                   colSpan={6}
-                  className="px-6 py-4 whitespace-nowrap text-center text-gray-500"
+                  className={`px-6 py-4 whitespace-nowrap text-center ${bgInput} ${textPrimary}`}
                 >
                   No orders found.
                 </td>
@@ -322,22 +322,22 @@ export default function OrdersPage() {
             ) : (
               orders.map((order) => (
                 <tr key={order._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}>
                     {order._id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {order.artToy.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {order.orderAmount}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {userRole === "admin" ? order.user.name : "me"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {format(new Date(order.createdAt), "dd MMM yyyy")}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     <button
                       onClick={() => handleEditClick(order)}
                       className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
@@ -387,7 +387,8 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel 
+                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
                   <button
                     className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseEditModal}
@@ -397,11 +398,11 @@ export default function OrdersPage() {
                   </button>
                   <DialogTitle
                     as="h3"
-                    className="text-2xl font-bold mb-4 text-center text-gray-800"
+                    className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}
                   >
                     Edit Order for {editingOrder?.artToy.name}
                   </DialogTitle>
-                  <div className="text-gray-600 mb-4 space-y-2">
+                  <div className={`${textSecondary} mb-4 space-y-2`}>
                     <p>
                       <strong>Order ID:</strong> {editingOrder?._id}
                     </p>
@@ -416,13 +417,24 @@ export default function OrdersPage() {
 
                   <div className="flex items-center justify-center space-x-4 mt-6">
                     <button
-                      className="cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                      className={`
+                        p-2 rounded-full transition-colors
+                        ${editQuantity <= 1 
+                          ? 'bg-gray-300 cursor-not-allowed text-gray-400' 
+                          : 'bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600'}
+                      `}
                       onClick={handleDecreaseQuantity}
                       disabled={editQuantity <= 1}
                     >
-                      <MinusIcon className="w-5 h-5 text-gray-600 transition-colors duration-300 cursor-pointer" />
+                      <MinusIcon
+                        className={`w-5 h-5 transition-colors duration-300 ${
+                          editQuantity <= 1
+                            ? 'text-gray-400 cursor-not-allowed'
+                            : 'text-gray-600 cursor-pointer'
+                        }`}
+                      />
                     </button>
-                    <span className="text-2xl font-bold text-gray-800">
+                    <span className={`text-2xl font-bold ${textPrimary}`}>
                       {editQuantity}
                     </span>
                     <button
@@ -502,7 +514,7 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
                   <button
                       className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                       onClick={() => setIsDeleteModalOpen(false)}
@@ -512,7 +524,7 @@ export default function OrdersPage() {
                   </button>
                   <DialogTitle
                     as="h3"
-                    className="text-2xl font-bold mb-4 text-center text-gray-800 mb-4"
+                    className={`text-2xl font-bold mb-4 text-center ${textPrimary} mb-4`}
                   >
                     Confirm Deletion
                   </DialogTitle>

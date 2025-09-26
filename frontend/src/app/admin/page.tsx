@@ -289,10 +289,10 @@ export default function AdminPage() {
   }
 
   // Set background and text colors based on theme
-  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const bgClass = theme === 'dark' ? 'bg-black' : 'bg-white';
+  const bgInput = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
   const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
   const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
-  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
 
   return (
     <main className="p-8">
@@ -307,50 +307,50 @@ export default function AdminPage() {
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-6">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className={`overflow-x-auto ${bgInput} rounded-lg shadow-lg p-6`}>
+        <table className={`min-w-full divide-y divide-gray-200`}>
+          <thead className={`${bgInput}`}>
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Name
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 SKU
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 AvailableQuota
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Description
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Poster
               </th>
               {/* New column for arrival date */}
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Arrival Date
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                className={`px-6 py-3 text-left text-xs font-bold ${textPrimary} uppercase tracking-wider`}
               >
                 Actions
               </th>
@@ -361,7 +361,7 @@ export default function AdminPage() {
               <tr>
                 <td
                   colSpan={7}
-                  className="px-6 py-4 whitespace-nowrap text-center text-gray-500"
+                  className={`px-6 py-4 whitespace-nowrap text-center ${bgInput} ${textPrimary}`}
                 >
                   No art toys found.
                 </td>
@@ -369,19 +369,19 @@ export default function AdminPage() {
             ) : (
               artToys.map((artToy) => (
                 <tr key={artToy._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}>
                     {artToy.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {artToy.sku}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {artToy.availableQuota}
                   </td>
-                  <td className="px-6 py-4 whitespace-normal text-sm text-gray-500 max-w-xs">
+                  <td className={`px-6 py-4 whitespace-normal text-sm ${bgInput} ${textSecondary} max-w-xs`}>
                     {artToy.description}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {artToy.posterPicture && (
                       <img
                         src={artToy.posterPicture}
@@ -391,12 +391,12 @@ export default function AdminPage() {
                     )}
                   </td>
                   {/* Display formatted arrival date */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {artToy.arrivalDate
                       ? format(new Date(artToy.arrivalDate), "dd MMM yyyy")
                       : "N/A"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     <button
                       onClick={() => handleOpenModal(artToy)}
                       className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
@@ -441,7 +441,8 @@ export default function AdminPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel 
+                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
                   <button
                     className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseModal}
@@ -451,15 +452,15 @@ export default function AdminPage() {
                   </button>
                   <DialogTitle
                     as="h3"
-                    className="text-2xl font-bold mb-4 text-center text-gray-800"
+                    className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}
                   >
                     {editingArtToy ? "Edit Art Toy" : "Add New Art Toy"}
                   </DialogTitle>
-                  <form onSubmit={handleSave} className="space-y-4">
+                  <form onSubmit={handleSave} className={`${bgClass} space-y-5`}>
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         Name
                       </label>
@@ -470,13 +471,13 @@ export default function AdminPage() {
                         value={formData.name}
                         onChange={handleFormChange}
                         required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="sku"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         SKU
                       </label>
@@ -487,13 +488,13 @@ export default function AdminPage() {
                         value={formData.sku}
                         onChange={handleFormChange}
                         required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="availableQuota"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         AvailableQuota
                       </label>
@@ -505,13 +506,13 @@ export default function AdminPage() {
                         onChange={handleFormChange}
                         required
                         min="0"
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         Description
                       </label>
@@ -522,13 +523,13 @@ export default function AdminPage() {
                         onChange={handleFormChange}
                         rows={3}
                         required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       ></textarea>
                     </div>
                     <div>
                       <label
                         htmlFor="posterPicture"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         Poster Picture URL
                       </label>
@@ -539,14 +540,14 @@ export default function AdminPage() {
                         value={formData.posterPicture}
                         onChange={handleFormChange}
                         required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       />
                     </div>
                     {/* New input field for arrival date */}
                     <div>
                       <label
                         htmlFor="arrivalDate"
-                        className="block text-sm font-medium text-gray-700"
+                        className={`block text-sm font-medium ${textSecondary}`}
                       >
                         Arrival Date
                       </label>
@@ -557,7 +558,7 @@ export default function AdminPage() {
                         value={formData.arrivalDate}
                         onChange={handleFormChange}
                         required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                        className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                       />
                     </div>
                     <div className="flex justify-end space-x-4">
@@ -615,7 +616,7 @@ export default function AdminPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <DialogPanel className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
                   <button
                       className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                       onClick={() => setIsDeleteModalOpen(false)}
@@ -625,14 +626,14 @@ export default function AdminPage() {
                   </button>
                   <DialogTitle
                     as="h3"
-                    className="text-2xl font-bold mb-4 text-center text-gray-800 mb-4"
+                    className={`text-2xl font-bold mb-4 text-center ${textPrimary} mb-4`}
                   >
                     Confirm Deletion
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 text-center">
                       Are you sure you want to delete the product{' '}
-                      <strong className="font-semibold text-gray-900">{deletingArtToy?.name}</strong>
+                      <strong className={`font-semibold ${textPrimary}`}>{deletingArtToy?.name}</strong>
                       ? This action cannot be undone.
                     </p>
                   </div>

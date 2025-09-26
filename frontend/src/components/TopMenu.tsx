@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import TopMenuItem from "./TopMenuItem";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from '../context/ThemeContext';
 
 export default function TopMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +20,9 @@ export default function TopMenu() {
 
   // State to switch between Login and Register forms
   const [isRegisterMode, setIsRegisterMode] = useState(false);
+
+  // State to change theme
+  const { theme } = useTheme();
 
   // Backend URL from Environment Variable
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -161,6 +165,12 @@ export default function TopMenu() {
     }
   };
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-black' : 'bg-white';
+  const bgInput = theme === 'dark' ? 'bg-gray-600' : 'bg-gray-50';
+  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+
   return (
     <header className="w-full h-20 bg-gray-900 text-white flex items-center justify-between px-8 shadow-md">
       <div className="flex items-center space-x-10">
@@ -192,13 +202,13 @@ export default function TopMenu() {
       
       {/* Login/Register Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-2xl relative">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className={`${bgClass} w-full max-w-md p-8 rounded-xl shadow-2xl relative`}>
+            <h2 className={`text-2xl font-bold mb-6 ${textPrimary} text-center`}>
               {isRegisterMode ? "Register" : "Login"}
             </h2>
 
-            <form onSubmit={handleFormSubmit} className="space-y-5">
+            <form onSubmit={handleFormSubmit} className={`${bgClass} space-y-5`}>
               {isRegisterMode && (
                 <>
                   <input
@@ -206,7 +216,7 @@ export default function TopMenu() {
                     placeholder="Full Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                    className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                     required
                   />
                   <input
@@ -214,13 +224,13 @@ export default function TopMenu() {
                     placeholder="Phone Number"
                     value={tel}
                     onChange={(e) => setTel(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                    className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                     required
                   />
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                    className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                   >
                     <option value="member">Member</option>
                     <option value="admin">Admin</option>
@@ -232,7 +242,7 @@ export default function TopMenu() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                 required
               />
               <input
@@ -240,7 +250,7 @@ export default function TopMenu() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                className={`w-full px-4 py-2 rounded-lg border border-gray-300 ${bgInput} ${textPrimary} placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition`}
                 required
               />
 
@@ -248,10 +258,10 @@ export default function TopMenu() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
+                  className={`cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
                   bg-gradient-to-r from-zinc-200 to-zinc-300
                   hover:from-zinc-300 hover:to-zinc-400
-                  shadow-md hover:shadow-lg hover:scale-105"
+                  shadow-md hover:shadow-lg hover:scale-105`}
                 >
                   Cancel
                 </button>
@@ -278,11 +288,11 @@ export default function TopMenu() {
             </form>
 
             {/* Status or alert message */}
-            <p className="text-gray-600 my-4">{modalMessage}</p>
+            <p className={`${textSecondary} my-4`}>{modalMessage}</p>
 
             {/* Button to switch between Login/Register modes */}
             {isRegisterMode ? (
-              <p className="text-gray-600 mt-4">
+              <p className={`${textSecondary} mt-4`}>
                 Already have an account?{" "}
                 <a
                   onClick={() => setIsRegisterMode(false)}
@@ -292,7 +302,7 @@ export default function TopMenu() {
                 </a>
               </p>
             ) : (
-              <p className="text-gray-600 mt-4">
+              <p className={`${textSecondary} mt-4`}>
                 Don't have an account?{" "}
                 <a
                   onClick={() => setIsRegisterMode(true)}

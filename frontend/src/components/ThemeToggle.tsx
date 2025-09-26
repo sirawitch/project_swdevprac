@@ -23,6 +23,7 @@ const ThemeToggle = () => {
             w-6 h-6 rounded-full bg-white shadow-md transform
             transition-transform duration-300 ease-in-out
             ${isDark ? 'translate-x-6' : 'translate-x-0'}
+            hover:ring-2 hover:ring-blue-400 cursor-pointer
             `}
         >
             <div className="w-full h-full flex items-center justify-center">
