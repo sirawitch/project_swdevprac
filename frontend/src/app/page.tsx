@@ -173,17 +173,19 @@ export default function Home() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {artToys.map((toy) => (
-          <Card
-            key={toy._id}
-            sku={toy.sku}
-            name={toy.name}
-            description={toy.description}
-            arrivalDate={toy.arrivalDate}
-            availableQuota={toy.availableQuota}
-            posterPicture={toy.posterPicture}
-            onOrderClick={() => handleOrderClick(toy.sku)}
-            userRole={userRole}
-          />
+          <div key={toy._id} className="flex justify-center items-center">
+            <Card
+              key={toy._id}
+              sku={toy.sku}
+              name={toy.name}
+              description={toy.description}
+              arrivalDate={toy.arrivalDate}
+              availableQuota={toy.availableQuota}
+              posterPicture={toy.posterPicture}
+              onOrderClick={() => handleOrderClick(toy.sku)}
+              userRole={userRole}
+            />
+          </div>
         ))}
       </div>
 
