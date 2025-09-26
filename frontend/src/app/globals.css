@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Default (Light Mode) */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,6 +18,12 @@
     --background: #ededed;
     --foreground: #ededed;
   }
+}
+
+/* When dark mode class is added to body */
+body.dark {
+  --background: #171717;
+  --foreground: #ffffff;
 }
 
 body {

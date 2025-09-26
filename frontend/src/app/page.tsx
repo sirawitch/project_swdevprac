@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { XMarkIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Card from "@/components/Card";
-import Image from "next/image";
-import { Fragment } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
