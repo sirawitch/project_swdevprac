@@ -220,6 +220,90 @@ const arttoysController = require('../controllers/arttoys');
  *         description: Art toy not found
  */
 
+/**
+ * @swagger
+ * /arttoys/name/{name}:
+ *   get:
+ *     summary: Get art toys by name with optional filters
+ *     description: Retrieve filter art toys. Accessible by all users.
+ *     tags: [Art Toys]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Art toy name (partial match, case insensitive)
+ *       - name: minQuota
+ *         in: query 
+ *         description: Minimum available quota required (finds Art Toys where availableQuota > minQuota).
+ *         required: true 
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *     responses:
+ *       200:
+ *         description: List of art toys
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 count:
+ *                   type: integer
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ArtToy'
+ *       500:
+ *         description: Server error
+ *   
+ */
+/**
+ * @swagger
+ * /arttoys/sku/{sku}:
+ *   get:
+ *     summary: Get art toys by sku with optional filters
+ *     description: Retrieve filter art toys. Accessible by all users.
+ *     tags: [Art Toys]
+ *     parameters:
+ *       - in: path
+ *         name: sku
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Art toy sku (partial match, case insensitive)
+ *       - name: minQuota
+ *         in: query 
+ *         description: Minimum available quota required (finds Art Toys where availableQuota > minQuota).
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *     responses:
+ *       200:
+ *         description: List of art toys
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 count:
+ *                   type: integer
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ArtToy'
+ *       500:
+ *         description: Server error
+ *   
+ */
 // Routes for /api/v1/arttoys
 router.route('/')
   .get(arttoysController.getArtToys)
@@ -230,4 +314,7 @@ router.route('/:id')
   .put(protect, authorize('admin'), arttoysController.updateArtToy)
   .delete(protect, authorize('admin'), arttoysController.deleteArtToy);
 
+router.route('/name/:name').get(arttoysController.getArtToysByNameAndFilter);
+  
+router.route('/sku/:sku').get(arttoysController.getArtToysBySKUAndFilter);
 module.exports = router;

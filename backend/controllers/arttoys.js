@@ -125,3 +125,35 @@ exports.deleteArtToy = async (req, res) => {
     message: 'Art Toy deleted'
   });
 };
+
+exports.getArtToysByNameAndFilter = async (req, res) => {
+  const name  = req.params.name;
+  const minQuota = req.query.minQuota;
+  const query = {
+    name: new RegExp(name, "i")
+  };
+
+  const artToys = (await ArtToy.find(query)).filter(
+    (toy) => toy.availableQuota >= minQuota
+  );
+  res.json({
+    success: true,
+    count: artToys.length,
+    data: artToys
+  })
+};
+exports.getArtToysBySKUAndFilter = async (req, res) => {
+  const sku = req.params.sku;
+  const minQuota = req.query.minQuota;
+  const query = {
+    sku: new RegExp(sku, "i"),
+  };
+
+  const artToys = (await ArtToy.find(query)).filter(toy => toy.availableQuota >= minQuota);
+
+  res.json({
+    success: true,
+    count: artToys.length,
+    data: artToys,
+  });
+};
