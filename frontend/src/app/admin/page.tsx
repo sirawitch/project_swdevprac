@@ -385,7 +385,7 @@ export default function AdminPage() {
                   {/* Display formatted arrival date */}
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {artToy.arrivalDate
-                      ? format(new Date(artToy.arrivalDate), "dd/MM/yyyy")
+                      ? format(new Date(artToy.arrivalDate), "dd MMM yyyy")
                       : "N/A"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

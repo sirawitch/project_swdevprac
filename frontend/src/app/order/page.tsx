@@ -418,11 +418,24 @@ export default function OrdersPage() {
                       {editQuantity}
                     </span>
                     <button
-                      className="cursor-pointer p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      className={`
+                        p-2 rounded-full transition-colors
+                        ${
+                          editQuantity >= 5
+                            ? 'bg-blue-300 cursor-not-allowed text-white'
+                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'
+                        }
+                      `}
                       onClick={handleIncreaseQuantity}
-                      disabled={editQuantity >= 100}
+                      disabled={editQuantity >= 5}
                     >
-                      <PlusIcon className="w-5 h-5 text-white transition-colors duration-300 cursor-pointer" />
+                      <PlusIcon
+                        className={`w-5 h-5 transition-colors duration-300 ${
+                          editQuantity >= 5
+                            ? 'text-white cursor-not-allowed'
+                            : 'text-white cursor-pointer'
+                        }`}
+                      />
                     </button>
                   </div>
 

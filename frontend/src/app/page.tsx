@@ -239,17 +239,17 @@ export default function Home() {
                 className={`
                   p-2 rounded-full transition-colors
                   ${
-                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota
+                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5
                       ? 'bg-blue-300 cursor-not-allowed text-white'
                       : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'
                   }
                 `}
                 onClick={handleIncreaseQuantity}
-                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota}
+                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5}
               >
                 <PlusIcon
                   className={`w-5 h-5 transition-colors duration-300 ${
-                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota
+                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5
                       ? 'text-white cursor-not-allowed'
                       : 'text-white cursor-pointer'
                   }`}
