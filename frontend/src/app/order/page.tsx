@@ -18,6 +18,7 @@ import {
   Transition,
   TransitionChild
 } from "@headlessui/react";
+import { useTheme } from '../../context/ThemeContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,6 +47,7 @@ export default function OrdersPage() {
   const [userRole, setUserRole] = useState<string>("guest");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deletingOrder, setDeletingOrder] = useState<Order | null>(null);
+  const { theme } = useTheme();
 
   const fetchUserRole = async () => {
     const token = localStorage.getItem("token");
@@ -248,9 +250,15 @@ export default function OrdersPage() {
     );
   }
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
+
   return (
     <main className="p-8">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+      <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>
         All Orders
       </h1>
       <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-6">

@@ -5,7 +5,6 @@ import "./globals.css";
 import React from 'react';
 import TopMenu from "@/components/TopMenu";
 import { ThemeProvider } from '../context/ThemeContext';
-import ThemeToggle from "@/components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +29,8 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <TopMenu />
         <ThemeProvider>
-          <ThemeToggle />
+          <TopMenu />
           {children}
         </ThemeProvider>
       </body>

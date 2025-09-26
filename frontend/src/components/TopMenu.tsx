@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import TopMenuItem from "./TopMenuItem";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function TopMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -168,6 +169,7 @@ export default function TopMenu() {
         {isLoggedIn && userRole === "admin" && (
           <TopMenuItem href="/admin" text="Admin" />
         )}
+        <ThemeToggle />
       </div>
 
       <div>

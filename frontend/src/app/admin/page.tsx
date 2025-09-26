@@ -15,6 +15,7 @@ import {
   Transition,
   TransitionChild
 } from "@headlessui/react";
+import { useTheme } from '../../context/ThemeContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -55,6 +56,7 @@ export default function AdminPage() {
     // Initialize new field in form data
     arrivalDate: "",
   });
+  const { theme } = useTheme();
 
   const fetchArtToys = async () => {
     setIsLoading(true);
@@ -286,10 +288,16 @@ export default function AdminPage() {
     );
   }
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
+
   return (
     <main className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
+        <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>Admin Dashboard</h1>
         <button
           onClick={() => handleOpenModal()}
           className="cursor-pointer flex items-center space-x-2 py-2 px-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
