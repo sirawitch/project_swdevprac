@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
+import { useTheme } from '../context/ThemeContext';
 
 interface CardProps {
   sku: string;
@@ -13,7 +14,6 @@ interface CardProps {
   posterPicture: string;
   onOrderClick: () => void;
   userRole: string;
-  theme: string;
 }
 
 export default function Card({
@@ -25,7 +25,6 @@ export default function Card({
   posterPicture,
   onOrderClick,
   userRole,
-  theme,
 }: CardProps) {
   const formattedDate = new Date(arrivalDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -34,6 +33,7 @@ export default function Card({
   });
 
   // Set background and text colors based on theme
+  const { theme } = useTheme();
   const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
   const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
   const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';

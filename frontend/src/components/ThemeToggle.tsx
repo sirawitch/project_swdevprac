@@ -1,6 +1,9 @@
 'use client';
 
-export default function ThemeToggle({ theme, toggleTheme }: { theme: string; toggleTheme: () => void }) {
+import { useTheme } from '../context/ThemeContext';
+
+const ThemeToggle = () => {
+    const { theme, toggleTheme } = useTheme();
     return (
         <button 
             onClick={toggleTheme}
@@ -10,3 +13,5 @@ export default function ThemeToggle({ theme, toggleTheme }: { theme: string; tog
         </button>
     );
 }
+
+export default ThemeToggle;

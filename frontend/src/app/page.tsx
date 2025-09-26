@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { XMarkIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Card from "@/components/Card";
-import ThemeToggle from "@/components/ThemeToggle";
-import useTheme from '../hooks/useTheme';
+import { useTheme } from '../context/ThemeContext';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,9 +26,7 @@ export default function Home() {
   const [userRole, setUserRole] = useState<string>("guest");
   const [selectedToy, setSelectedToy] = useState<ArtToy | null>(null);
   const [orderQuantity, setOrderQuantity] = useState(1);
-  const [theme, setTheme] = useTheme();
-
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+  const { theme } = useTheme();
 
   const fetchArtToys = async () => {
     setIsLoading(true);
@@ -169,10 +166,15 @@ export default function Home() {
     );
   }
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-zinc-900' : 'bg-white';
+  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const shadowClass = theme === 'dark' ? 'shadow-md hover:shadow-xl' : 'shadow-md hover:shadow-xl';
+
   return (
     <main className="p-8">
-      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+      <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>
         Available Art Toys
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -188,7 +190,6 @@ export default function Home() {
               posterPicture={toy.posterPicture}
               onOrderClick={() => handleOrderClick(toy.sku)}
               userRole={userRole}
-              theme={theme}
             />
           </div>
         ))}
