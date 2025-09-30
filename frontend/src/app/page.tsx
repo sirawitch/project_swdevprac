@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { XMarkIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Card from "@/components/Card";
 import { useTheme } from '../context/ThemeContext';
+import SearchBar from "@/components/SearchBar";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,11 +28,32 @@ export default function Home() {
   const [selectedToy, setSelectedToy] = useState<ArtToy | null>(null);
   const [orderQuantity, setOrderQuantity] = useState(1);
   const { theme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [quotaFilter, setQuotaFilter] = useState<number | null>(null); 
+  const [searchField, setSearchField] = useState<"name" | "sku">("name"); 
 
-  const fetchArtToys = async () => {
+  const fetchArtToys = async (
+    query: string = "",
+    quota: number | null = 0,
+    field: "name" | "sku" = "name"
+  ) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/v1/arttoys`);
+      let API=""
+      const params = new URLSearchParams();
+      if(field == "name"&& query) {
+        API = `${API_URL}/api/v1/arttoys/name/${query}/`;
+      }
+      else if(field == "sku"&& query){ 
+        API = `${API_URL}/api/v1/arttoys/sku/${query}/`;
+      }
+      else{
+        API = `${API_URL}/api/v1/arttoys`;
+      }
+      if(query&&quota!==null) params.append("minQuota", quota.toString());
+      const queryString = params.toString();
+      const response = await fetch(`${API}${queryString ? `?${queryString}` : ""}`);
+      console.log(response)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -134,6 +156,16 @@ export default function Home() {
       alert("Cannot order more than the available quota.");
     }
   };
+  const handleSearch = (
+    query: string,
+    days: number | null,
+    field: "name" | "sku"
+  ) => {
+    setSearchQuery(query);
+    setQuotaFilter(days);
+    setSearchField(field);
+    fetchArtToys(query, days, field);
+  };
 
   useEffect(() => {
     fetchArtToys();
@@ -173,9 +205,13 @@ export default function Home() {
 
   return (
     <main className="p-8">
-      <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>
-        Available Art Toys
-      </h1>
+      <SearchBar
+        onSearch={handleSearch}
+        currentQuery={searchQuery}
+        currentQuota={quotaFilter}
+        currentField={searchField}
+      />
+      <br/>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {artToys.map((toy) => (
           <div key={toy._id} className="flex justify-center items-center">
@@ -196,14 +232,18 @@ export default function Home() {
 
       {isModalOpen && selectedToy && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className={`relative ${bgClass} rounded-lg shadow-lg p-6 max-w-lg w-full m-4`}>
+          <div
+            className={`relative ${bgClass} rounded-lg shadow-lg p-6 max-w-lg w-full m-4`}
+          >
             <button
               className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
               onClick={() => setIsModalOpen(false)}
             >
               <XMarkIcon className="h-6 w-6" />
             </button>
-            <h2 className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}>
+            <h2
+              className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}
+            >
               Confirm Order for {selectedToy.name}
             </h2>
             <div className={`${textSecondary} mb-4 space-y-2`}>
@@ -222,18 +262,22 @@ export default function Home() {
               <button
                 className={`
                   p-2 rounded-full transition-colors
-                  ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 
-                    ? 'bg-gray-300 cursor-not-allowed text-gray-400' 
-                    : 'bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600'}
+                  ${
+                    selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                      ? "bg-gray-300 cursor-not-allowed text-gray-400"
+                      : "bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600"
+                  }
                 `}
                 onClick={handleDecreaseQuantity}
-                disabled={selectedToy?.availableQuota === 0 || orderQuantity <= 1}
+                disabled={
+                  selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                }
               >
                 <MinusIcon
                   className={`w-5 h-5 transition-colors duration-300 ${
                     selectedToy?.availableQuota === 0 || orderQuantity <= 1
-                      ? 'text-gray-400 cursor-not-allowed'
-                      : 'text-gray-600 cursor-pointer'
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-gray-600 cursor-pointer"
                   }`}
                 />
               </button>
@@ -244,19 +288,30 @@ export default function Home() {
                 className={`
                   p-2 rounded-full transition-colors
                   ${
-                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5
-                      ? 'bg-blue-300 cursor-not-allowed text-white'
-                      : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'
+                    !selectedToy ||
+                    selectedToy.availableQuota === 0 ||
+                    orderQuantity >= selectedToy.availableQuota ||
+                    orderQuantity >= 5
+                      ? "bg-blue-300 cursor-not-allowed text-white"
+                      : "bg-blue-600 hover:bg-blue-700 cursor-pointer text-white"
                   }
                 `}
                 onClick={handleIncreaseQuantity}
-                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5}
+                disabled={
+                  !selectedToy ||
+                  selectedToy.availableQuota === 0 ||
+                  orderQuantity >= selectedToy.availableQuota ||
+                  orderQuantity >= 5
+                }
               >
                 <PlusIcon
                   className={`w-5 h-5 transition-colors duration-300 ${
-                    !selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5
-                      ? 'text-white cursor-not-allowed'
-                      : 'text-white cursor-pointer'
+                    !selectedToy ||
+                    selectedToy.availableQuota === 0 ||
+                    orderQuantity >= selectedToy.availableQuota ||
+                    orderQuantity >= 5
+                      ? "text-white cursor-not-allowed"
+                      : "text-white cursor-pointer"
                   }`}
                 />
               </button>
