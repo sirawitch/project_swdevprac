@@ -304,6 +304,42 @@ const arttoysController = require('../controllers/arttoys');
  *         description: Server error
  *   
  */
+/**
+ * @swagger
+ * /arttoys/filter/{minQuota}:
+ *   get:
+ *     summary: Get art toys by sku with optional filters
+ *     description: Retrieve filter art toys. Accessible by all users.
+ *     tags: [Art Toys]
+ *     parameters:
+ *       - in: path
+ *         name: minQuota
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *         description: Minimum available quota required (finds Art Toys where availableQuota > minQuota).
+ *     responses:
+ *       200:
+ *         description: List of art toys
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 count:
+ *                   type: integer
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ArtToy'
+ *       500:
+ *         description: Server error
+ *   
+ */
 // Routes for /api/v1/arttoys
 router.route('/')
   .get(arttoysController.getArtToys)
@@ -317,4 +353,5 @@ router.route('/:id')
 router.route('/name/:name').get(arttoysController.getArtToysByNameAndFilter);
   
 router.route('/sku/:sku').get(arttoysController.getArtToysBySKUAndFilter);
+router.route('/filter/:minQuota').get(arttoysController.getArtToysByFilter);
 module.exports = router;

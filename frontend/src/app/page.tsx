@@ -47,10 +47,14 @@ export default function Home() {
       else if(field == "sku"&& query){ 
         API = `${API_URL}/api/v1/arttoys/sku/${query}/`;
       }
+      else if(query===""&&quota!==null&&quota>0){
+        API = `${API_URL}/api/v1/arttoys/filter/${quota}`;
+      }
       else{
         API = `${API_URL}/api/v1/arttoys`;
       }
       if(query&&quota!==null) params.append("minQuota", quota.toString());
+      else if(query) params.append("minQuota", "0");
       const queryString = params.toString();
       const response = await fetch(`${API}${queryString ? `?${queryString}` : ""}`);
       console.log(response)

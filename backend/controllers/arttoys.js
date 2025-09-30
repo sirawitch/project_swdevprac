@@ -157,3 +157,14 @@ exports.getArtToysBySKUAndFilter = async (req, res) => {
     data: artToys,
   });
 };
+exports.getArtToysByFilter= async (req, res) => {
+  const minQuota = req.params.minQuota;
+  const artToys = (await ArtToy.find()).filter(
+    (toy) => toy.availableQuota >= minQuota
+  );
+  res.json({
+    success: true,
+    count: artToys.length,
+    data: artToys,
+  });
+}
