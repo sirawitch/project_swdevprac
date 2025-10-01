@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTheme } from '../context/ThemeContext';
 
 // อัปเดต Props ให้รับค่า field ด้วย
 interface SearchBarProps {
@@ -24,6 +25,7 @@ export default function SearchBar({
   currentQuota,
   currentField,
 }: SearchBarProps) {
+  const { theme } = useTheme();
   const [search, setSearch] = React.useState(currentQuery);
   const [quota, setQuota] = React.useState<string>(
     currentQuota !== null ? String(currentQuota) : ""
@@ -40,87 +42,87 @@ export default function SearchBar({
     onSearch(search, quotaValue, searchField);
   };
 
+  // Set background and text colors based on theme
+  const bgClass = theme === 'dark' ? 'bg-gray-900' : 'bg-white';
+  const textPrimary = theme === 'dark' ? 'text-gray-100' : 'text-gray-800';
+  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const inputBg = theme === 'dark' ? 'bg-gray-800' : 'bg-white';
+  const inputBorder = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
+  const placeholderColor = theme === 'dark' ? 'placeholder-gray-500' : 'placeholder-gray-400';
+  const hoverBgGray = theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200';
+
   return (
     <form
       onSubmit={handleSearch}
-      className="flex flex-col w-full max-w-4xl mx-auto space-y-4 p-4 bg-white rounded-xl shadow-lg"
+      className={`flex flex-col w-full max-w-4xl mx-auto space-y-6 p-6 rounded-2xl shadow-xl transition-all ${bgClass}`}
     >
       {/* Search Field Selector */}
-      <div className="flex items-center space-x-4">
-        <label className="text-gray-600 font-medium whitespace-nowrap">
+      <div className="flex flex-wrap items-center space-x-4">
+        <label className={`font-medium text-sm ${textSecondary}`}>
           Search From:
         </label>
-        <div className="flex bg-gray-100 p-1 rounded-lg">
-          <button
-            type="button"
-            onClick={() => setSearchField("name")}
-            className={`
-              py-2 px-4 rounded-md text-sm font-semibold transition-colors
-              ${
-                searchField === "name"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "text-gray-700 hover:bg-gray-200"
-              }
-            `}
-          >
-            Name
-          </button>
-          <button
-            type="button"
-            onClick={() => setSearchField("sku")}
-            className={`
-              py-2 px-4 rounded-md text-sm font-semibold transition-colors
-              ${
-                searchField === "sku"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "text-gray-700 hover:bg-gray-200"
-              }
-            `}
-          >
-            SKU
-          </button>
+        <div className={`flex p-1 rounded-xl ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
+          {(['name', 'sku'] as Array<'name' | 'sku'>).map((field) => {
+            const isActive = searchField === field;
+
+            return (
+              <button
+                key={field}
+                type="button"
+                onClick={() => setSearchField(field)}
+                className={`
+                  cursor-pointer relative inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300
+                  ${isActive
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md hover:scale-105'
+                    : `${textPrimary} border border-transparent hover:border-blue-500 hover:text-blue-600 hover:bg-blue-100`}
+                  ${theme === 'dark' ? `dark:hover:bg-gray-800` : `? dark:hover:bg-gray-100`}
+                `}
+              >
+                {field.toUpperCase()}
+              </button>
+            );
+          })}
         </div>
       </div>
 
+      {/* Search + Quota + Submit */}
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <input
           type="text"
-          placeholder={`Fill ${
-            searchField === "name" ? "name" : "SKU"
-          } to search`}
+          placeholder={`Enter ${searchField === 'name' ? 'Name' : 'SKU'} to search`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-grow p-3 border border-gray-300 rounded-lg shadow-inner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-150"
+          className={`flex-grow p-3 rounded-xl shadow-inner transition focus:ring-2 focus:ring-blue-500 focus:outline-none
+            ${inputBg} ${inputBorder} ${placeholderColor} border text-sm ${textPrimary}`}
         />
 
         <div className="flex items-center space-x-2 w-full md:w-auto">
-          <label
-            htmlFor="quota-filter"
-            className="text-gray-600 font-medium whitespace-nowrap"
-          >
+          <label htmlFor="quota-filter" className={`font-medium text-sm ${textSecondary}`}>
             Minimum Quota:
           </label>
           <input
             id="quota-filter"
             type="number"
+            min="0"
             placeholder="Quota"
             value={quota}
             onChange={(e) => setQuota(e.target.value)}
-            min="0"
-            className="w-24 p-3 border border-gray-300 rounded-lg shadow-inner text-center focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 transition duration-150"
+            className={`
+              w-24 p-3 rounded-xl text-center shadow-inner transition
+              focus:ring-2 focus:ring-blue-500 focus:outline-none
+              appearance-none
+              ${inputBg} ${inputBorder} ${placeholderColor} border text-sm ${textPrimary}
+            `}
           />
         </div>
 
-        {/* 3. Search Button */}
         <button
           type="submit"
-          className="
-            py-3 px-6 rounded-lg bg-blue-600 text-white font-bold 
-            hover:bg-blue-700 transition-colors shadow-md 
-            active:scale-95 transform disabled:bg-gray-400
+          className={`
+            cursor-pointer group relative inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold text-white transition-all duration-300
+            bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105
             w-full md:w-auto
-          "
-          disabled={false}
+          `}
         >
           Search
         </button>
