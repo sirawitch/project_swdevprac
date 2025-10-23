@@ -16,7 +16,7 @@ import {
   TransitionChild
 } from "@headlessui/react";
 import { useTheme } from '../../context/ThemeContext';
-
+import { useRouter } from "next/router";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface ArtToy {
@@ -57,6 +57,7 @@ export default function AdminPage() {
     arrivalDate: "",
   });
   const { theme } = useTheme();
+  const router = useRouter();
 
   const fetchArtToys = async () => {
     setIsLoading(true);
@@ -66,9 +67,23 @@ export default function AdminPage() {
     if (!token) {
       setError("Please log in with admin privileges to manage products.");
       setIsLoading(false);
+      router.push("/");
       return;
     }
-
+    else{
+      const response = await fetch(`${API_URL}/api/v1/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if(data.data.role==="user"){
+        router.push("/");
+        return;
+      }
+    }
+    }
     try {
       const response = await fetch(`${API_URL}/api/v1/arttoys`, {
         headers: {
