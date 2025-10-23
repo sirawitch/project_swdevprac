@@ -123,11 +123,16 @@ export default function TopMenu() {
         });
 
         if (response.ok) {
-          setModalMessage("Registration successful! Please log in.");
-          setIsRegisterMode(false);
+          const data = await response.json();
+          let userRoleFromBackend = data.role;
+          localStorage.setItem("token", data.token);
+          setIsLoggedIn(true);
+          setUserRole(userRoleFromBackend);
+          setModalMessage("Register successful");
+          handleCloseModal();
         } else {
           const errorData = await response.json();
-          setModalMessage(errorData.message || "Registration failed");
+          setModalMessage(errorData.message || "Email already in use");
         }
       } else {
         const response = await fetch(`${API_URL}/api/v1/auth/login`, {
@@ -140,14 +145,8 @@ export default function TopMenu() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Response data from backend:", data);
           let userRoleFromBackend = data.role;
           localStorage.setItem("token", data.token);
-          console.log(
-            "Extracted role before setting state:",
-            userRoleFromBackend
-          );
-
           setIsLoggedIn(true);
           setUserRole(userRoleFromBackend);
           setModalMessage("Login successful");
