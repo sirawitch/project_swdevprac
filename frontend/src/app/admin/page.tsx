@@ -15,6 +15,7 @@ import {
   Transition,
   TransitionChild
 } from "@headlessui/react";
+import Image from "next/image";
 import { useTheme } from '../../context/ThemeContext';
 import { useRouter } from "next/navigation";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -398,7 +399,7 @@ export default function AdminPage() {
                   </td>
                   <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
                     {artToy.posterPicture && (
-                      <img
+                      <Image
                         src={artToy.posterPicture}
                         alt={artToy.name}
                         className="w-16 h-16 object-cover rounded-md"
