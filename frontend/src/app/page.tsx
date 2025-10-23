@@ -147,6 +147,7 @@ export default function Home() {
 
     setIsModalOpen(false);
     setOrderQuantity(1);
+    window.location.reload();
   };
 
   const handleDecreaseQuantity = () => {
