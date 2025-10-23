@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import TopMenuItem from "./TopMenuItem";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from '../context/ThemeContext';
+import { useRouter } from "next/navigation";
 
 export default function TopMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,7 +11,7 @@ export default function TopMenu() {
   const [userRole, setUserRole] = useState("guest");
   const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   // States for Login and Register forms
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,6 +69,7 @@ export default function TopMenu() {
 
   const handleLogoutClick = async () => {
     const token = localStorage.getItem("token");
+    router.push("/");
     if (!token) {
       setIsLoggedIn(false);
       setUserRole("guest");
