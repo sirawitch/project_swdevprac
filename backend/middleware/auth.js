@@ -23,7 +23,7 @@ exports.protect = async (req, res, next) => {
   if (!token || token === "null") {
     return res
       .status(401)
-      .json({ success: false, message: "Not authorize to access this route1" });
+      .json({ success: false, message: "Not authorize to access this route" });
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -34,7 +34,7 @@ exports.protect = async (req, res, next) => {
     console.log(err.stack);
     return res
       .status(401)
-      .json({ success: false, message: "Not authorize to access this route2" });
+      .json({ success: false, message: "Not authorize to access this route" });
   }
 };
 
