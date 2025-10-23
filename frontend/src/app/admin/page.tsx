@@ -16,7 +16,7 @@ import {
   TransitionChild
 } from "@headlessui/react";
 import { useTheme } from '../../context/ThemeContext';
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface ArtToy {
