@@ -86,6 +86,7 @@ export default function AdminPage() {
         }
       }}catch (e) {
       console.error("Failed to fetch user role:", error);
+      router.push("/");
     }
 
     }
