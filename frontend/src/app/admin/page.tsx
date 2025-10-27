@@ -8,15 +8,15 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { 
+import {
   Dialog,
   DialogPanel,
   DialogTitle,
   Transition,
-  TransitionChild
+  TransitionChild,
 } from "@headlessui/react";
 import Image from "next/image";
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from "../../context/ThemeContext";
 import { useRouter } from "next/navigation";
 import { ca } from "date-fns/locale";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -69,8 +69,7 @@ export default function AdminPage() {
     if (!token) {
       router.push("/");
       return;
-    }
-    else{
+    } else {
       try {
         const response = await fetch(`${API_URL}/api/v1/auth/me`, {
           headers: {
@@ -80,15 +79,15 @@ export default function AdminPage() {
         if (response.ok) {
           const data = await response.json();
           const role = data.data.role;
-          if(role !== 'admin'){
+          if (role !== "admin") {
             router.push("/");
             return;
+          }
         }
-      }}catch (e) {
-      console.error("Failed to fetch user role:", error);
-      router.push("/");
-    }
-
+      } catch (e) {
+        console.error("Failed to fetch user role:", error);
+        router.push("/");
+      }
     }
     try {
       const response = await fetch(`${API_URL}/api/v1/arttoys`, {
@@ -310,15 +309,17 @@ export default function AdminPage() {
   }
 
   // Set background and text colors based on theme
-  const bgClass = theme === 'dark' ? 'bg-black' : 'bg-white';
-  const bgInput = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
-  const textPrimary = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
-  const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+  const bgClass = theme === "dark" ? "bg-black" : "bg-white";
+  const bgInput = theme === "dark" ? "bg-gray-900" : "bg-gray-50";
+  const textPrimary = theme === "dark" ? "text-gray-200" : "text-gray-800";
+  const textSecondary = theme === "dark" ? "text-gray-400" : "text-gray-500";
 
   return (
     <main className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>Admin Dashboard</h1>
+        <h1 className={`text-4xl font-bold text-center mb-8 ${textPrimary}`}>
+          Admin Dashboard
+        </h1>
         <button
           onClick={() => handleOpenModal()}
           className="cursor-pointer flex items-center space-x-2 py-2 px-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
@@ -390,19 +391,29 @@ export default function AdminPage() {
             ) : (
               artToys.map((artToy) => (
                 <tr key={artToy._id}>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}
+                  >
                     {artToy.name}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {artToy.sku}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {artToy.availableQuota}
                   </td>
-                  <td className={`px-6 py-4 whitespace-normal text-sm ${bgInput} ${textSecondary} max-w-xs`}>
+                  <td
+                    className={`px-6 py-4 whitespace-normal text-sm ${bgInput} ${textSecondary} max-w-xs`}
+                  >
                     {artToy.description}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {artToy.posterPicture && (
                       <Image
                         src={artToy.posterPicture}
@@ -412,12 +423,16 @@ export default function AdminPage() {
                     )}
                   </td>
                   {/* Display formatted arrival date */}
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {artToy.arrivalDate
                       ? format(new Date(artToy.arrivalDate), "dd MMM yyyy")
                       : "N/A"}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     <button
                       onClick={() => handleOpenModal(artToy)}
                       className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
@@ -462,8 +477,9 @@ export default function AdminPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel 
-                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
+                <DialogPanel
+                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <button
                     className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseModal}
@@ -477,7 +493,10 @@ export default function AdminPage() {
                   >
                     {editingArtToy ? "Edit Art Toy" : "Add New Art Toy"}
                   </DialogTitle>
-                  <form onSubmit={handleSave} className={`${bgClass} space-y-5`}>
+                  <form
+                    onSubmit={handleSave}
+                    className={`${bgClass} space-y-5`}
+                  >
                     <div>
                       <label
                         htmlFor="name"
@@ -637,13 +656,15 @@ export default function AdminPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
+                <DialogPanel
+                  className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <button
-                      className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-                      onClick={() => setIsDeleteModalOpen(false)}
-                      aria-label="Close"
-                    >
-                      <XMarkIcon className="h-6 w-6" />
+                    className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+                    onClick={() => setIsDeleteModalOpen(false)}
+                    aria-label="Close"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
                   </button>
                   <DialogTitle
                     as="h3"
@@ -653,8 +674,10 @@ export default function AdminPage() {
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500 text-center">
-                      Are you sure you want to delete the product{' '}
-                      <strong className={`font-semibold ${textPrimary}`}>{deletingArtToy?.name}</strong>
+                      Are you sure you want to delete the product{" "}
+                      <strong className={`font-semibold ${textPrimary}`}>
+                        {deletingArtToy?.name}
+                      </strong>
                       ? This action cannot be undone.
                     </p>
                   </div>
