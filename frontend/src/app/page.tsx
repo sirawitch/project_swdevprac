@@ -209,17 +209,16 @@ export default function Home() {
   const textSecondary = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
 
   return (
-    <main className="p-8">
+    <main className="p-4 sm:p-6 md:p-8">
       <SearchBar
         onSearch={handleSearch}
         currentQuery={searchQuery}
         currentQuota={quotaFilter}
         currentField={searchField}
       />
-      <br/>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-6">
         {artToys.map((toy) => (
-          <div key={toy._id} className="flex justify-center items-center">
+          <div key={toy._id} className="flex justify-center items-center w-full">
             <Card
               key={toy._id}
               sku={toy.sku}
@@ -236,107 +235,60 @@ export default function Home() {
       </div>
 
       {isModalOpen && selectedToy && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 p-4">
           <div
-            className={`relative ${bgClass} rounded-lg shadow-lg p-6 max-w-lg w-full m-4`}
+            className={`relative ${bgClass} rounded-lg shadow-lg p-4 sm:p-6 md:p-8 max-w-sm sm:max-w-md md:max-w-lg w-full`}
           >
             <button
-              className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
               onClick={() => setIsModalOpen(false)}
             >
-              <XMarkIcon className="h-6 w-6" />
+              <XMarkIcon className="h-6 w-6 sm:h-7 sm:w-7" />
             </button>
-            <h2
-              className={`text-2xl font-bold mb-4 text-center ${textPrimary}`}
-            >
+
+            <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center ${textPrimary}`}>
               Confirm Order for {selectedToy.name}
             </h2>
-            <div className={`${textSecondary} mb-4 space-y-2`}>
-              <p>
-                <strong>SKU:</strong> {selectedToy.sku}
-              </p>
-              <p>
-                <strong>Description:</strong> {selectedToy.description}
-              </p>
-              <p>
-                <strong>Available Quota:</strong> {selectedToy.availableQuota}
-              </p>
+
+            <div className={`${textSecondary} mb-4 space-y-2 text-sm sm:text-base`}>
+              <p><strong>SKU:</strong> {selectedToy.sku}</p>
+              <p><strong>Description:</strong> {selectedToy.description}</p>
+              <p><strong>Available Quota:</strong> {selectedToy.availableQuota}</p>
             </div>
 
             <div className="flex items-center justify-center space-x-4 mt-6">
               <button
-                className={`
-                  p-2 rounded-full transition-colors
-                  ${
-                    selectedToy?.availableQuota === 0 || orderQuantity <= 1
-                      ? "bg-gray-300 cursor-not-allowed text-gray-400"
-                      : "bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600"
-                  }
-                `}
+                className={`p-2 rounded-full transition-colors ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 ? "bg-gray-300 cursor-not-allowed text-gray-400" : "bg-gray-200 hover:bg-gray-300 text-gray-600"}`}
                 onClick={handleDecreaseQuantity}
-                disabled={
-                  selectedToy?.availableQuota === 0 || orderQuantity <= 1
-                }
+                disabled={selectedToy?.availableQuota === 0 || orderQuantity <= 1}
               >
-                <MinusIcon
-                  className={`w-5 h-5 transition-colors duration-300 ${
-                    selectedToy?.availableQuota === 0 || orderQuantity <= 1
-                      ? "text-gray-400 cursor-not-allowed"
-                      : "text-gray-600 cursor-pointer"
-                  }`}
-                />
+                <MinusIcon className={`w-4 sm:w-5 h-4 sm:h-5 ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 ? "text-gray-400" : "text-gray-600"}`} />
               </button>
-              <span className={`text-2xl font-bold ${textPrimary}`}>
+
+              <span className={`text-xl sm:text-2xl md:text-3xl font-bold ${textPrimary}`}>
                 {orderQuantity}
               </span>
+
               <button
-                className={`
-                  p-2 rounded-full transition-colors
-                  ${
-                    !selectedToy ||
-                    selectedToy.availableQuota === 0 ||
-                    orderQuantity >= selectedToy.availableQuota ||
-                    orderQuantity >= 5
-                      ? "bg-blue-300 cursor-not-allowed text-white"
-                      : "bg-blue-600 hover:bg-blue-700 cursor-pointer text-white"
-                  }
-                `}
+                className={`p-2 rounded-full transition-colors ${!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5 ? "bg-blue-300 cursor-not-allowed text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
                 onClick={handleIncreaseQuantity}
-                disabled={
-                  !selectedToy ||
-                  selectedToy.availableQuota === 0 ||
-                  orderQuantity >= selectedToy.availableQuota ||
-                  orderQuantity >= 5
-                }
+                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5}
               >
-                <PlusIcon
-                  className={`w-5 h-5 transition-colors duration-300 ${
-                    !selectedToy ||
-                    selectedToy.availableQuota === 0 ||
-                    orderQuantity >= selectedToy.availableQuota ||
-                    orderQuantity >= 5
-                      ? "text-white cursor-not-allowed"
-                      : "text-white cursor-pointer"
-                  }`}
-                />
+                <PlusIcon className={`w-4 sm:w-5 h-4 sm:h-5 text-white`} />
               </button>
             </div>
 
-            <div className="flex justify-end space-x-4 mt-6">
+            <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 mt-6">
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-gray-800 transition-all duration-300
-                bg-gradient-to-r from-zinc-200 to-zinc-300
-                hover:from-zinc-300 hover:to-zinc-400
-                shadow-md hover:shadow-lg hover:scale-105"
+                className="px-4 sm:px-5 py-2 rounded-full font-semibold text-gray-800 bg-gradient-to-r from-zinc-200 to-zinc-300 hover:from-zinc-300 hover:to-zinc-400 shadow-md hover:shadow-lg transition-all duration-300"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="cursor-pointer group relative inline-flex items-center justify-center px-5 py-2 rounded-full font-semibold text-white transition-all duration-300
-                bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg hover:scale-105"
+                className="px-4 sm:px-5 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300"
                 onClick={() => handleOrderSubmit(selectedToy._id)}
               >
                 Confirm
