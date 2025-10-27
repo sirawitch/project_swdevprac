@@ -66,8 +66,8 @@ export default function AdminPage() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      setError("Please log in with admin privileges to manage products.");
-      setIsLoading(false);
+      //setError("Please log in with admin privileges to manage products.");
+      //setIsLoading(false);
       router.push("/");
       return;
     }
@@ -79,15 +79,15 @@ export default function AdminPage() {
     });
     if (response.ok) {
       const data = await response.json();
-      if(data.data.role==="user"){
+      if(data.data.role!=="admin"){
         router.push("/");
         return;
       }
     }
-      else{
-        router.push("/");
-        return;
-      }
+    else{
+      router.push("/");
+      return;
+    }
     }
     try {
       const response = await fetch(`${API_URL}/api/v1/arttoys`, {
