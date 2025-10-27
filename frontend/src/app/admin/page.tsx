@@ -84,10 +84,6 @@ export default function AdminPage() {
         return;
       }
     }
-    else{
-      router.push("/");
-      return;
-    }
     }
     try {
       const response = await fetch(`${API_URL}/api/v1/arttoys`, {
