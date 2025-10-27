@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { useTheme } from '../../context/ThemeContext';
 import { useRouter } from "next/navigation";
+import { ca } from "date-fns/locale";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface ArtToy {
@@ -66,24 +67,27 @@ export default function AdminPage() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      //setError("Please log in with admin privileges to manage products.");
-      //setIsLoading(false);
       router.push("/");
       return;
     }
     else{
-      const response = await fetch(`${API_URL}/api/v1/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      try {
+        const response = await fetch(`${API_URL}/api/v1/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const role = data.data.role;
+          if(role !== 'admin'){
+            router.push("/");
+            return;
         }
-    });
-    if (response.ok) {
-      const data = await response.json();
-      if(data.data.role!=="admin"){
-        router.push("/");
-        return;
-      }
+      }}catch (e) {
+      console.error("Failed to fetch user role:", error);
     }
+
     }
     try {
       const response = await fetch(`${API_URL}/api/v1/arttoys`, {
