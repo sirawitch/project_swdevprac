@@ -4,7 +4,8 @@ Members:
 - Bhuribhat Ratanasanguanvongs
 - Sirawitch Tiyasuttipun
 
-Link : https://project-swdevprac.vercel.app
+__Deployment Link:__ https://project-swdevprac.vercel.app
+
 ## 🚀 Full Stack App Project Setup Instructions
 
 This is a full-stack application with a **React (Next.js)** frontend and a **Node.js/Express** backend. The project is containerized using **Docker** for seamless development and deployment.
@@ -13,24 +14,25 @@ This is a full-stack application with a **React (Next.js)** frontend and a **Nod
 
 ```
 project-root/
-├── frontend/                  # Frontend (Next.js)
-│   ├── Dockerfile             # Docker config for frontend (development)
-│   ├── Dockerfile.prod        # Docker config for frontend (production)
-│   ├── .env.local             # Frontend environment variables
-│   └── ...                    # Other frontend files
-├── backend/                   # Backend (Node.js + Express)
-│   ├── Dockerfile             # Docker config for backend (development)
-│   ├── Dockerfile.prod        # Docker config for backend (production)
-│   ├── config/
-│   │   └── config.env         # Backend environment variables
-│   └── ...                    # Other backend files
-├── nginx/
-│   ├── Dockerfile             # Docker config for production
-│   └── default.conf           # Serving static frontend files
+├── frontend/                       # Frontend (Next.js)
+│   ├── Dockerfile                  # Docker config for frontend (development)
+│   ├── .env.local                  # Frontend environment variables
+│   └── ...                         # Other frontend files
 │
-├── docker-compose.dev.yml     # Orchestrates frontend & backend containers (development)
-├── docker-compose.prod.yml    # Orchestrates nginx & backend containers (production)
-└── README.md                  # Project setup and documentation
+├── backend/                        # Backend (Node.js + Express)
+│   ├── Dockerfile                  # Docker config for backend (development)
+│   ├── config/
+│   │   └── config.env              # Backend environment variables
+│   └── ...                         # Other backend files
+│
+├── .github/
+│   └── copilot-instructions.md     # Custom GitHub Copilot configuration and prompts
+│
+├── ASSET_LINK_GUIDE.md             # Instructions for adding and formatting image links (e.g., Google Drive)
+│
+├── .gitignore                      # Ignore logs, env, etc.
+├── docker-compose.dev.yml          # Orchestrates frontend & backend containers (development)
+└── README.md                       # Project setup and documentation
 ```
 
 ---
@@ -118,13 +120,6 @@ Start development environment:
 ```bash
 $ docker-compose -f docker-compose.dev.yml up -d --build    # To run in background (detached mode)
 $ docker-compose -f docker-compose.dev.yml down             # To stop the process
-```
-
-Start production deployment:
-
-```bash
-$ docker-compose -f docker-compose.prod.yml up -d --build    # To run in background (detached mode)
-$ docker-compose -f docker-compose.prod.yml down             # To stop the process
 ```
 
 Where:
