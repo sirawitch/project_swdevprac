@@ -218,7 +218,10 @@ export default function Home() {
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-6">
         {artToys.map((toy) => (
-          <div key={toy._id} className="flex justify-center items-center w-full">
+          <div
+            key={toy._id}
+            className="flex justify-center items-center w-full"
+          >
             <Card
               key={toy._id}
               sku={toy.sku}
@@ -246,33 +249,72 @@ export default function Home() {
               <XMarkIcon className="h-6 w-6 sm:h-7 sm:w-7" />
             </button>
 
-            <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center ${textPrimary}`}>
+            <h2
+              className={`text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center ${textPrimary}`}
+            >
               Confirm Order for {selectedToy.name}
             </h2>
 
-            <div className={`${textSecondary} mb-4 space-y-2 text-sm sm:text-base`}>
-              <p><strong>SKU:</strong> {selectedToy.sku}</p>
-              <p><strong>Description:</strong> {selectedToy.description}</p>
-              <p><strong>Available Quota:</strong> {selectedToy.availableQuota}</p>
+            <div
+              className={`${textSecondary} mb-4 space-y-2 text-sm sm:text-base`}
+            >
+              <p>
+                <strong>SKU:</strong> {selectedToy.sku}
+              </p>
+              <p>
+                <strong>Description:</strong> {selectedToy.description}
+              </p>
+              <p>
+                <strong>Available Quota:</strong> {selectedToy.availableQuota}
+              </p>
             </div>
 
             <div className="flex items-center justify-center space-x-4 mt-6">
+              <p>
+                <strong>Quantity </strong>
+              </p>
               <button
-                className={`p-2 rounded-full transition-colors ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 ? "bg-gray-300 cursor-not-allowed text-gray-400" : "bg-gray-200 hover:bg-gray-300 text-gray-600"}`}
+                className={`p-2 rounded-full transition-colors ${
+                  selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                    ? "bg-gray-300 cursor-not-allowed text-gray-400"
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-600"
+                }`}
                 onClick={handleDecreaseQuantity}
-                disabled={selectedToy?.availableQuota === 0 || orderQuantity <= 1}
+                disabled={
+                  selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                }
               >
-                <MinusIcon className={`w-4 sm:w-5 h-4 sm:h-5 ${selectedToy?.availableQuota === 0 || orderQuantity <= 1 ? "text-gray-400" : "text-gray-600"}`} />
+                <MinusIcon
+                  className={`w-4 sm:w-5 h-4 sm:h-5 ${
+                    selectedToy?.availableQuota === 0 || orderQuantity <= 1
+                      ? "text-gray-400"
+                      : "text-gray-600"
+                  }`}
+                />
               </button>
 
-              <span className={`text-xl sm:text-2xl md:text-3xl font-bold ${textPrimary}`}>
+              <span
+                className={`text-xl sm:text-2xl md:text-3xl font-bold ${textPrimary}`}
+              >
                 {orderQuantity}
               </span>
 
               <button
-                className={`p-2 rounded-full transition-colors ${!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5 ? "bg-blue-300 cursor-not-allowed text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
+                className={`p-2 rounded-full transition-colors ${
+                  !selectedToy ||
+                  selectedToy.availableQuota === 0 ||
+                  orderQuantity >= selectedToy.availableQuota ||
+                  orderQuantity >= 5
+                    ? "bg-blue-300 cursor-not-allowed text-white"
+                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                }`}
                 onClick={handleIncreaseQuantity}
-                disabled={!selectedToy || selectedToy.availableQuota === 0 || orderQuantity >= selectedToy.availableQuota || orderQuantity >= 5}
+                disabled={
+                  !selectedToy ||
+                  selectedToy.availableQuota === 0 ||
+                  orderQuantity >= selectedToy.availableQuota ||
+                  orderQuantity >= 5
+                }
               >
                 <PlusIcon className={`w-4 sm:w-5 h-4 sm:h-5 text-white`} />
               </button>

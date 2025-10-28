@@ -322,22 +322,34 @@ export default function OrdersPage() {
             ) : (
               orders.map((order) => (
                 <tr key={order._id}>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${bgInput} ${textSecondary}`}
+                  >
                     {order._id}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {order.artToy.name}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {order.orderAmount}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {userRole === "admin" ? order.user.name : "me"}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     {format(new Date(order.createdAt), "dd MMM yyyy")}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}>
+                  <td
+                    className={`px-6 py-4 whitespace-nowrap text-sm ${bgInput} ${textSecondary}`}
+                  >
                     <button
                       onClick={() => handleEditClick(order)}
                       className="cursor-pointer text-blue-600 hover:text-blue-900 transition-colors mr-2"
@@ -387,8 +399,9 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel 
-                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
+                <DialogPanel
+                  className={`relative w-full max-w-lg transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <button
                     className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={handleCloseEditModal}
@@ -416,12 +429,17 @@ export default function OrdersPage() {
                   </div>
 
                   <div className="flex items-center justify-center space-x-4 mt-6">
+                    <p>
+                      <strong>Quantity </strong>
+                    </p>
                     <button
                       className={`
                         p-2 rounded-full transition-colors
-                        ${editQuantity <= 1 
-                          ? 'bg-gray-300 cursor-not-allowed text-gray-400' 
-                          : 'bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600'}
+                        ${
+                          editQuantity <= 1
+                            ? "bg-gray-300 cursor-not-allowed text-gray-400"
+                            : "bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-600"
+                        }
                       `}
                       onClick={handleDecreaseQuantity}
                       disabled={editQuantity <= 1}
@@ -429,8 +447,8 @@ export default function OrdersPage() {
                       <MinusIcon
                         className={`w-5 h-5 transition-colors duration-300 ${
                           editQuantity <= 1
-                            ? 'text-gray-400 cursor-not-allowed'
-                            : 'text-gray-600 cursor-pointer'
+                            ? "text-gray-400 cursor-not-allowed"
+                            : "text-gray-600 cursor-pointer"
                         }`}
                       />
                     </button>
@@ -442,8 +460,8 @@ export default function OrdersPage() {
                         p-2 rounded-full transition-colors
                         ${
                           editQuantity >= 5
-                            ? 'bg-blue-300 cursor-not-allowed text-white'
-                            : 'bg-blue-600 hover:bg-blue-700 cursor-pointer text-white'
+                            ? "bg-blue-300 cursor-not-allowed text-white"
+                            : "bg-blue-600 hover:bg-blue-700 cursor-pointer text-white"
                         }
                       `}
                       onClick={handleIncreaseQuantity}
@@ -452,8 +470,8 @@ export default function OrdersPage() {
                       <PlusIcon
                         className={`w-5 h-5 transition-colors duration-300 ${
                           editQuantity >= 5
-                            ? 'text-white cursor-not-allowed'
-                            : 'text-white cursor-pointer'
+                            ? "text-white cursor-not-allowed"
+                            : "text-white cursor-pointer"
                         }`}
                       />
                     </button>
@@ -514,13 +532,15 @@ export default function OrdersPage() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}>
+                <DialogPanel
+                  className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl ${bgClass} p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <button
-                      className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-                      onClick={() => setIsDeleteModalOpen(false)}
-                      aria-label="Close"
-                    >
-                      <XMarkIcon className="h-6 w-6" />
+                    className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+                    onClick={() => setIsDeleteModalOpen(false)}
+                    aria-label="Close"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
                   </button>
                   <DialogTitle
                     as="h3"
