@@ -68,6 +68,7 @@ export default function Card({
         <p className={`text-sm ${textPrimary}`}>{description}</p>
 
         <div className={`flex items-center ${textSecondary} text-sm mt-2`}>
+          <p>Pre Order</p>
           <CalendarIcon className="w-4 h-4 mr-1" />
           <span>{formattedDate}</span>
         </div>
