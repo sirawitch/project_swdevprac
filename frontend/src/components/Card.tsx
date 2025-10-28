@@ -66,9 +66,8 @@ export default function Card({
         <h3 className={`text-lg font-semibold ${textPrimary}`}>{name}</h3>
         <p className={`text-sm ${textSecondary}`}>SKU: {sku}</p>
         <p className={`text-sm ${textPrimary}`}>{description}</p>
-
+        <p className={`text-sm ${textSecondary}`}>Pre Order</p>
         <div className={`flex items-center ${textSecondary} text-sm mt-2`}>
-          <p>Pre Order</p>
           <CalendarIcon className="w-4 h-4 mr-1" />
           <span>{formattedDate}</span>
         </div>
