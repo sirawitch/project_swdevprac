@@ -485,7 +485,7 @@ export default function AdminPage() {
                     onClick={handleCloseModal}
                     aria-label="Close"
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    <XMarkIcon className={`h-6 w-6 sm:h-7 sm:w-7 ${textPrimary}`} />
                   </button>
                   <DialogTitle
                     as="h3"
@@ -664,7 +664,7 @@ export default function AdminPage() {
                     onClick={() => setIsDeleteModalOpen(false)}
                     aria-label="Close"
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    <XMarkIcon className={`h-6 w-6 sm:h-7 sm:w-7 ${textPrimary}`} />
                   </button>
                   <DialogTitle
                     as="h3"

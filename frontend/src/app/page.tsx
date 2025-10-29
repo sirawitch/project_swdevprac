@@ -243,10 +243,10 @@ export default function Home() {
             className={`relative ${bgClass} rounded-lg shadow-lg p-4 sm:p-6 md:p-8 max-w-sm sm:max-w-md md:max-w-lg w-full`}
           >
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              className="cursor-pointer absolute top-3 right-3 text-gray-500 hover:text-gray-800"
               onClick={() => setIsModalOpen(false)}
             >
-              <XMarkIcon className="h-6 w-6 sm:h-7 sm:w-7" />
+              <XMarkIcon className={`h-6 w-6 sm:h-7 sm:w-7 ${textPrimary}`} />
             </button>
 
             <h2
@@ -269,15 +269,15 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex items-center justify-center space-x-4 mt-6">
+            <div className={`${textSecondary} flex items-center justify-center space-x-4 mt-6`}>
               <p>
-                <strong>Quantity </strong>
+                <strong >Quantity </strong>
               </p>
               <button
                 className={`p-2 rounded-full transition-colors ${
                   selectedToy?.availableQuota === 0 || orderQuantity <= 1
                     ? "bg-gray-300 cursor-not-allowed text-gray-400"
-                    : "bg-gray-200 hover:bg-gray-300 text-gray-600"
+                    : "bg-gray-200 cursor-pointer hover:bg-gray-300 text-gray-600"
                 }`}
                 onClick={handleDecreaseQuantity}
                 disabled={
@@ -306,7 +306,7 @@ export default function Home() {
                   orderQuantity >= selectedToy.availableQuota ||
                   orderQuantity >= 5
                     ? "bg-blue-300 cursor-not-allowed text-white"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-blue-600 cursor-pointer hover:bg-blue-700 text-white"
                 }`}
                 onClick={handleIncreaseQuantity}
                 disabled={
@@ -324,13 +324,13 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 sm:px-5 py-2 rounded-full font-semibold text-gray-800 bg-gradient-to-r from-zinc-200 to-zinc-300 hover:from-zinc-300 hover:to-zinc-400 shadow-md hover:shadow-lg transition-all duration-300"
+                className="cursor-pointer px-4 sm:px-5 py-2 rounded-full font-semibold text-gray-800 bg-gradient-to-r from-zinc-200 to-zinc-300 hover:from-zinc-300 hover:to-zinc-400 shadow-md hover:shadow-lg transition-all duration-300"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 sm:px-5 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300"
+                className="cursor-pointer px-4 sm:px-5 py-2 rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300"
                 onClick={() => handleOrderSubmit(selectedToy._id)}
               >
                 Confirm

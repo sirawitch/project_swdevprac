@@ -407,7 +407,7 @@ export default function OrdersPage() {
                     onClick={handleCloseEditModal}
                     aria-label="Close"
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    <XMarkIcon className={`h-6 w-6 sm:h-7 sm:w-7 ${textPrimary}`} />
                   </button>
                   <DialogTitle
                     as="h3"
@@ -428,9 +428,9 @@ export default function OrdersPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-center space-x-4 mt-6">
+                  <div className={`${textSecondary} flex items-center justify-center space-x-4 mt-6`}>
                     <p>
-                      <strong>Quantity </strong>
+                      <strong >Quantity </strong>
                     </p>
                     <button
                       className={`
@@ -540,7 +540,7 @@ export default function OrdersPage() {
                     onClick={() => setIsDeleteModalOpen(false)}
                     aria-label="Close"
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    <XMarkIcon className={`h-6 w-6 sm:h-7 sm:w-7 ${textPrimary}`} />
                   </button>
                   <DialogTitle
                     as="h3"
